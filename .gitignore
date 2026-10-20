@@ -1,0 +1,17 @@
+.venv/
+backend/.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+# Dataset besar dan hasil preprocessing
+dataset/cleaned/
+dataset/preprocessed/
+dataset/split/
+dataset/*.zip
+
+# Hasil training dan eksperimen
+outputs/

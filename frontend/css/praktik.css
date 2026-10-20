@@ -1,0 +1,1170 @@
+
+/* =========================================
+   ISYARATKU - PRAKTIK GESTURE
+   COMPLETE CSS + LIGHTING + PERFORMANCE
+   ========================================= */
+
+/* =========================================
+   1. GLOBAL
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: var(--color-navy);
+    --gray: var(--color-muted);
+    --light: var(--color-bg);
+    --white: var(--color-surface);
+    --border: var(--color-border);
+    --camera-bg: var(--color-mint);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    background: var(--light);
+    color: var(--black);
+    line-height: 1.5;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   2. HEADER
+   ========================================= */
+
+.practice-header {
+    height: 72px;
+    padding: 0 5.5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-bottom: 1px solid var(--border);
+}
+
+.practice-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 31px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.practice-nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.practice-nav a {
+    padding: 9px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: var(--color-navy);
+    font-size: 14px;
+    transition: 0.2s ease;
+    font-weight: 600;
+}
+
+.practice-nav a:hover {
+    background: var(--color-mint);
+    color: var(--color-navy);
+}
+
+.practice-nav a.active {
+    background: var(--color-primary);
+    color: var(--color-surface);
+}
+
+/* =========================================
+   3. MAIN
+   ========================================= */
+
+.practice-main {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 55px 5.5% 75px;
+    flex: 1;
+}
+
+/* =========================================
+   4. INTRO
+   ========================================= */
+
+.practice-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 32px;
+}
+
+.intro-copy {
+    max-width: 750px;
+}
+
+.intro-copy h1 {
+    font-size: clamp(34px, 3.5vw, 49px);
+    line-height: 1.1;
+    letter-spacing: -1.8px;
+    font-weight: 800;
+}
+
+.intro-copy p {
+    max-width: 730px;
+    margin-top: 13px;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.privacy-notice {
+    max-width: 290px;
+    min-width: 230px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    background: var(--color-mint);
+}
+
+.privacy-notice span {
+    font-size: 20px;
+    color: var(--color-primary);
+}
+
+.privacy-notice p {
+    color: var(--color-navy);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   5. WORKSPACE
+   ========================================= */
+
+.practice-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(290px, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+/* =========================================
+   6. CAMERA
+   ========================================= */
+
+.camera-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: var(--camera-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.camera-container::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border: 2px dashed rgba(8, 127, 140, 0.35);
+    border-radius: 16px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#webcam,
+#overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#webcam {
+    object-fit: contain;
+    background: transparent;
+    transform: scaleX(-1);
+    z-index: 0;
+}
+
+#overlay {
+    object-fit: contain;
+    pointer-events: none;
+    transform: scaleX(-1);
+    z-index: 1;
+}
+
+/* =========================================
+   7. CAMERA PLACEHOLDER
+   ========================================= */
+
+.camera-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hand-guide {
+    width: 165px;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--color-border-strong);
+    border-radius: 48%;
+    color: var(--color-primary);
+}
+
+.hand-guide svg {
+    width: 120px;
+    height: 145px;
+}
+
+.camera-placeholder p {
+    color: var(--color-navy);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.camera-status,
+.ai-status {
+    position: absolute;
+    top: 22px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.camera-status {
+    left: 22px;
+    background: white;
+    color: var(--color-navy);
+    box-shadow: 0 1px 3px rgba(23, 49, 58, 0.15);
+}
+
+.ai-status {
+    right: 22px;
+    background: var(--black);
+    color: white;
+}
+
+/* Status sistem belum diketahui: badge tidak ditampilkan */
+.ai-status[hidden] {
+    display: none;
+}
+
+.ai-status.is-ready {
+    background: var(--color-success);
+}
+
+.ai-status.is-error {
+    background: var(--color-danger);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-border-strong);
+}
+
+/* =========================================
+   8. CAMERA CONTROLS
+   ========================================= */
+
+.camera-controls {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.primary-button,
+.secondary-button {
+    min-height: 46px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.primary-button {
+    border: 1px solid var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.primary-button:hover {
+    background: var(--color-primary-strong);
+    border-color: var(--color-primary-strong);
+}
+
+.secondary-button {
+    border: 1px solid var(--color-border-strong);
+    background: white;
+    color: var(--color-navy);
+}
+
+.secondary-button:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+/* =========================================
+   9. LIGHTING STATUS
+   ========================================= */
+
+.lighting-status {
+    display: block;
+    min-height: 18px;
+    margin-top: 12px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-navy);
+    background: var(--color-surface-muted);
+}
+
+.lighting-status:empty {
+    display: none;
+}
+
+.lighting-status[data-status="normal"] {
+    color: var(--color-success);
+    background: var(--color-success-bg);
+}
+
+.lighting-status[data-status="gelap"] {
+    color: var(--color-warning);
+    background: var(--color-warning-bg);
+}
+
+.lighting-status[data-status="terang"] {
+    color: var(--color-warning);
+    background: var(--color-warning-bg);
+}
+
+/* =========================================
+   10. CAMERA ERROR
+   ========================================= */
+
+.camera-error {
+    margin-top: 10px;
+    padding: 12px 15px;
+    background: var(--color-danger-bg);
+    border: 1px solid var(--color-danger-border);
+    border-radius: 10px;
+    color: var(--color-danger);
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.camera-error[hidden] {
+    display: none;
+}
+
+/* =========================================
+   11. PERFORMANCE MONITORING
+   ========================================= */
+
+.performance-panel {
+    width: 100%;
+    margin-top: 16px;
+    padding: 20px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    box-shadow: none;
+}
+
+.performance-panel summary {
+    cursor: pointer;
+    color: var(--color-navy);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.performance-panel[open] summary {
+    margin-bottom: 16px;
+}
+
+/* summary tidak tercakup aturan fokus di theme.css */
+.performance-panel summary:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.performance-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.performance-empty {
+    display: none;
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+/* Kamera belum aktif: satu pesan, bukan empat kotak berisi "—".
+   Browser tanpa :has() tetap menampilkan kotak seperti sebelumnya. */
+.camera-section:not(:has(.camera-active)) .performance-grid {
+    display: none;
+}
+
+.camera-section:not(:has(.camera-active)) .performance-empty {
+    display: block;
+}
+
+.performance-item {
+    min-width: 0;
+    padding: 15px 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+
+.performance-item span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.performance-item strong {
+    display: block;
+    color: var(--color-navy);
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.performance-note {
+    margin-top: 13px;
+    padding-left: 18px;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   12. RIGHT PANEL
+   ========================================= */
+
+.result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.result-card {
+    padding: 22px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    box-shadow: var(--shadow-card);
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.result-header h2 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* =========================================
+   13. PREDICTION DISPLAY
+   ========================================= */
+
+.prediction-display {
+    margin-top: 20px;
+    padding: 18px;
+    min-height: 125px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 20px;
+    background: var(--black);
+    color: white;
+}
+
+.prediction-letter {
+    width: 83px;
+    height: 83px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: white;
+    color: var(--color-primary);
+    font-size: 56px;
+    font-weight: 800;
+}
+
+.prediction-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.prediction-details[hidden] {
+    display: none;
+}
+
+.prediction-details strong {
+    display: block;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.prediction-details > span {
+    display: block;
+    margin-top: 8px;
+    color: var(--color-on-dark-muted);
+    font-size: 12px;
+}
+
+.confidence-track {
+    width: 100%;
+    height: 6px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: 20px;
+    transition: width 0.25s ease;
+}
+
+.prediction-message {
+    margin-top: 18px;
+    color: var(--color-navy);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.selected-letter-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+.selected-letter-info strong {
+    padding: 5px 10px;
+    background: var(--color-mint);
+    border-radius: 15px;
+    color: var(--color-primary-strong);
+}
+
+/* =========================================
+   14. RESULT ACTIONS
+   ========================================= */
+
+.result-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+/* Switch suara (TTS) ON/OFF */
+.sound-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 16px 0 10px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 24px;
+    color: var(--color-navy);
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.sound-switch:hover:not(:disabled) {
+    border-color: var(--color-primary);
+}
+
+.sound-switch-track {
+    position: relative;
+    flex: none;
+    width: 40px;
+    height: 22px;
+    background: var(--color-border-strong);
+    border-radius: 11px;
+    transition: background-color 0.2s ease;
+}
+
+.sound-switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--color-surface);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(23, 49, 58, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.sound-switch[aria-checked="true"] {
+    background: var(--color-mint);
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+.sound-switch[aria-checked="true"] .sound-switch-track {
+    background: var(--color-primary);
+}
+
+.sound-switch[aria-checked="true"] .sound-switch-thumb {
+    transform: translateX(18px);
+}
+
+.sound-hint {
+    margin-top: 10px;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sound-hint:empty {
+    display: none;
+}
+
+.retry-button {
+    min-height: 44px;
+    padding: 0 10px;
+    background: transparent;
+    border: none;
+    color: var(--color-primary-strong);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.retry-button:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   15. TIPS
+   ========================================= */
+
+.tips-card {
+    padding: 22px;
+    border-radius: 22px;
+    background: var(--color-mint);
+}
+
+.tips-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.tips-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+}
+
+.tips-card li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-navy);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.tip-check {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-size: 11px;
+}
+
+/* =========================================
+   16. FOOTER
+   ========================================= */
+
+.practice-footer {
+    min-height: 125px;
+    padding: 25px 5.5%;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 45px;
+    background: var(--black);
+    color: white;
+}
+
+.footer-about strong {
+    font-size: 14px;
+}
+
+.footer-about p {
+    max-width: 290px;
+    margin-top: 7px;
+    color: var(--color-on-dark-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.footer-links a {
+    color: var(--color-on-dark-muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--color-surface);
+}
+
+.practice-footer > span {
+    color: var(--color-on-dark-muted);
+    font-size: 12px;
+}
+
+/* =========================================
+   17. CAMERA INTERACTIVE STATES
+   ========================================= */
+
+.camera-container.camera-active .camera-placeholder {
+    display: none;
+}
+
+.camera-container.camera-active {
+    background: var(--color-camera);
+}
+
+.camera-container.camera-active #webcam {
+    background: var(--color-camera);
+}
+
+.camera-status.is-active .status-dot {
+    background: var(--color-success);
+}
+
+.camera-status.is-pending .status-dot {
+    background: var(--color-pending);
+}
+
+/* =========================================
+   18. MODAL PILIH HURUF
+   ========================================= */
+
+.letter-dialog {
+    position: fixed;
+    inset: 0;
+    width: min(520px, calc(100% - 30px));
+    max-height: min(80vh, 700px);
+    margin: auto;
+    padding: 25px;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background: white;
+    color: var(--color-navy);
+    box-shadow: 0 24px 80px rgba(23, 49, 58, 0.25);
+    overflow-y: auto;
+}
+
+.letter-dialog::backdrop {
+    background: rgba(23, 49, 58, 0.55);
+}
+
+.dialog-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.dialog-heading h2 {
+    font-size: 23px;
+    letter-spacing: -0.5px;
+}
+
+.dialog-heading p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.dialog-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-mint);
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--color-navy);
+}
+
+.letter-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 25px;
+}
+
+.letter-option {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-border);
+    border-radius: 11px;
+    background: var(--color-bg);
+    color: var(--color-navy);
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.letter-option:hover,
+.letter-option.is-selected {
+    background: var(--color-mint);
+    color: var(--color-primary-strong);
+    border-color: var(--color-primary);
+}
+
+.letter-option.is-selected {
+    background: var(--color-primary);
+    color: var(--color-surface);
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.dialog-actions button {
+    padding: 11px 17px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    min-height: 44px;
+    font-weight: 600;
+}
+
+#clearLetterButton {
+    border: 1px solid var(--color-border-strong);
+    background: white;
+    color: var(--color-navy);
+}
+
+#doneLetterButton {
+    border: 1px solid var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+button:focus-visible,
+a:focus-visible,
+.letter-option:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* =========================================
+   19. RESPONSIVE TABLET
+   ========================================= */
+
+@media (max-width: 1050px) {
+
+    .practice-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .result-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .practice-footer {
+        grid-template-columns: 1fr auto;
+    }
+
+    .practice-footer > span {
+        grid-column: 1 / -1;
+    }
+}
+
+/* =========================================
+   20. RESPONSIVE MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .practice-header {
+        height: auto;
+        padding: 15px 5%;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .practice-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .practice-main {
+        padding: 35px 5% 50px;
+    }
+
+    .practice-intro {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .intro-copy h1 {
+        font-size: 36px;
+    }
+
+    .privacy-notice {
+        max-width: 100%;
+    }
+
+    .result-section {
+        display: flex;
+    }
+
+    .camera-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .performance-panel {
+        padding: 16px;
+    }
+
+    .performance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .performance-item {
+        padding: 13px 11px;
+    }
+
+    .performance-item strong {
+        font-size: 15px;
+    }
+
+    .practice-footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .practice-footer > span {
+        grid-column: auto;
+    }
+}
+
+/* =========================================
+   21. RESPONSIVE SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 450px) {
+
+    .practice-nav a {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    .intro-copy h1 {
+        font-size: 32px;
+    }
+
+    .camera-container {
+        aspect-ratio: 4 / 5;
+    }
+
+    .hand-guide {
+        width: 115px;
+        height: 140px;
+    }
+
+    .hand-guide svg {
+        width: 85px;
+        height: 105px;
+    }
+
+    .camera-placeholder p {
+        max-width: 160px;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .camera-status,
+    .ai-status {
+        top: 18px;
+        font-size: 9px;
+        padding: 6px 8px;
+    }
+
+    .camera-status {
+        left: 18px;
+    }
+
+    .ai-status {
+        right: 18px;
+    }
+
+    .result-card {
+        padding: 17px;
+    }
+
+    .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .prediction-letter {
+        width: 70px;
+        height: 70px;
+        font-size: 45px;
+    }
+
+    .prediction-display {
+        padding: 13px;
+    }
+
+    .letter-dialog {
+        padding: 18px;
+    }
+
+    .letter-picker-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .letter-option {
+        font-size: 16px;
+    }
+
+    .selected-letter-info {
+        flex-wrap: wrap;
+    }
+}
+
+/* =========================================
+   22. REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

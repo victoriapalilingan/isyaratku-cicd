@@ -1,0 +1,571 @@
+/* =========================================
+   ISYARATKU - HOME PAGE
+   Warna dari css/theme.css
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: var(--color-navy);
+    --gray: var(--color-muted);
+    --light: var(--color-bg);
+    --white: var(--color-surface);
+    --border: var(--color-border);
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--light);
+    color: var(--black);
+    line-height: 1.5;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.home-header {
+    height: 72px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.home-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--color-primary);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.home-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.home-nav a {
+    padding: 9px 15px;
+    border-radius: 999px;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.home-nav a:hover {
+    background: var(--color-mint);
+}
+
+.home-nav a.active {
+    background: var(--color-primary);
+    color: var(--white);
+}
+
+/* =========================================
+   HERO
+   ========================================= */
+
+.home-hero {
+    min-height: 420px;
+    padding: 60px 7%;
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: 60px;
+    align-items: center;
+    background: var(--color-mint);
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--color-primary-strong);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+}
+
+.hero-text h1 {
+    margin-top: 18px;
+    font-size: clamp(36px, 4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+}
+
+.hero-text p {
+    max-width: 520px;
+    margin-top: 16px;
+    color: var(--gray);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 26px;
+}
+
+.dark-button,
+.light-button {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.dark-button {
+    background: var(--color-primary);
+    color: var(--white);
+}
+
+.dark-button:hover {
+    background: var(--color-primary-strong);
+}
+
+.light-button {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--color-border-strong);
+}
+
+.light-button:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+/* =========================================
+   HERO VISUAL
+   ========================================= */
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.bisindo-visual {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.letter-card {
+    position: absolute;
+    width: 120px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 48px;
+    font-weight: 800;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--black);
+    box-shadow: var(--shadow-card);
+}
+
+.letter-card.left {
+    left: 20px;
+    transform: rotate(-7deg);
+}
+
+.letter-card.center {
+    z-index: 2;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--white);
+}
+
+.letter-card.right {
+    right: 20px;
+    transform: rotate(7deg);
+}
+
+/* =========================================
+   LEARNING SECTION
+   ========================================= */
+
+.learning-section {
+    padding: 70px 7%;
+    background: var(--light);
+}
+
+.section-heading span {
+    color: var(--color-primary-strong);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+.section-heading h2 {
+    margin-top: 8px;
+    font-size: 30px;
+    letter-spacing: -0.8px;
+}
+
+.section-heading p {
+    margin-top: 8px;
+    color: var(--gray);
+    font-size: 15px;
+}
+
+.learning-cards {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.learning-card {
+    min-height: 200px;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.light-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+}
+
+.dark-card {
+    background: var(--black);
+    color: var(--white);
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-icon {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--color-mint);
+    color: var(--color-primary-strong);
+    font-size: 15px;
+}
+
+.dark-card .card-icon {
+    background: var(--color-accent);
+    color: var(--black);
+}
+
+.card-content h3 {
+    margin-top: 14px;
+    font-size: 20px;
+}
+
+.card-content p {
+    max-width: 300px;
+    margin-top: 8px;
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.dark-card .card-content p {
+    color: var(--color-on-dark-muted);
+}
+
+.card-content a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 18px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.card-content a:hover {
+    background: var(--color-primary-strong);
+}
+
+/* Satu-satunya tombol aksen kuning: CTA praktik */
+.dark-card .card-content a {
+    background: var(--color-accent);
+    color: var(--black);
+}
+
+.dark-card .card-content a:hover {
+    background: var(--white);
+}
+
+.card-visual {
+    width: 130px;
+    min-width: 130px;
+    border-radius: 14px;
+    background: var(--color-mint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.dark-visual {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.mini-hand {
+    font-size: 50px;
+    filter: grayscale(1);
+}
+
+.card-visual > span {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dark-visual > span {
+    background: var(--color-accent);
+    color: var(--black);
+}
+
+/* =========================================
+   STEPS
+   ========================================= */
+
+.steps-section {
+    padding: 70px 7%;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+}
+
+.section-heading.center {
+    text-align: center;
+}
+
+.section-heading.center p {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.steps {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.step-card {
+    min-height: 150px;
+    padding: 20px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-primary-strong);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.step-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--color-mint);
+    color: var(--color-primary-strong);
+}
+
+.step-card h3 {
+    margin-top: 18px;
+    font-size: 17px;
+}
+
+.step-card p {
+    margin-top: 6px;
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.home-footer {
+    min-height: 120px;
+    padding: 28px 7%;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 50px;
+    align-items: center;
+    background: var(--black);
+    color: var(--white);
+}
+
+.home-footer strong {
+    font-size: 15px;
+}
+
+.home-footer p {
+    max-width: 300px;
+    margin-top: 6px;
+    color: var(--color-on-dark-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.footer-links a {
+    color: var(--color-on-dark-muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--white);
+}
+
+.copyright {
+    color: var(--color-on-dark-muted);
+    font-size: 12px;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 850px) {
+
+    .home-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .learning-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .home-footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .home-header {
+        height: auto;
+        padding: 15px 6%;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .home-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-buttons {
+        flex-wrap: wrap;
+    }
+
+    .learning-card {
+        flex-direction: column;
+    }
+
+    .card-visual {
+        width: 100%;
+        height: 130px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .home-nav a {
+        padding: 9px 10px;
+        font-size: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

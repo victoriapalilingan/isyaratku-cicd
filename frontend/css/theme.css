@@ -1,0 +1,60 @@
+/* =========================================
+   ISYARATKU - THEME
+   Token warna dan gaya dasar bersama.
+   Dimuat sebelum CSS tiap halaman.
+   ========================================= */
+
+:root {
+    /* Palet utama */
+    --color-primary: #087F8C;
+    --color-primary-strong: #066570;
+    --color-navy: #17313A;
+    --color-bg: #F7FAF8;
+    --color-mint: #E1F3EE;
+    --color-accent: #F4C95D;
+    --color-surface: #FFFFFF;
+
+    /* Turunan netral */
+    --color-muted: #52676C;
+    --color-placeholder: #5B716D;
+    --color-border: #D6E5E0;
+    --color-border-strong: #7A928E;
+    --color-surface-muted: #EEF6F3;
+    --color-on-dark-muted: #B9CDC8;
+    --color-camera: #10242B;
+
+    /* Warna semantik */
+    --color-success: #1E7A4C;
+    --color-success-bg: #E3F4EA;
+    --color-warning: #7A5300;
+    --color-warning-bg: #FDF1D2;
+    --color-danger: #B42318;
+    --color-danger-bg: #FDECEA;
+    --color-danger-border: #F2C1BB;
+    --color-pending: #B7860B;
+    --color-focus: var(--color-primary);
+
+    /* Bentuk */
+    --shadow-card:
+        0 1px 2px rgba(23, 49, 58, 0.06),
+        0 8px 20px rgba(23, 49, 58, 0.06);
+    --font-sans:
+        "Segoe UI", system-ui, -apple-system, Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+}
+
+::selection {
+    background: var(--color-mint);
+    color: var(--color-navy);
+}
+
+/* Fokus keyboard yang jelas di semua halaman */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* Di footer gelap, cincin fokus memakai aksen kuning */
+:where(.home-footer, .learn-footer, .detail-footer, .practice-footer) :focus-visible {
+    outline-color: var(--color-accent);
+}

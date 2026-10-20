@@ -1,0 +1,430 @@
+/* =========================================
+   ISYARATKU
+   WELCOME PAGE
+   Warna dari css/theme.css
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: var(--color-navy);
+    --gray: var(--color-muted);
+    --background: var(--color-bg);
+    --white: var(--color-surface);
+    --border: var(--color-border);
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--background);
+    color: var(--black);
+    line-height: 1.5;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.welcome-header {
+    width: 100%;
+    height: 76px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--color-primary);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.brand span {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.welcome-header nav {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-header nav a {
+    padding: 9px 15px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--black);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.welcome-header nav a:hover {
+    background: var(--color-mint);
+}
+
+/* =========================================
+   HERO
+   ========================================= */
+
+main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.welcome-hero {
+    width: 100%;
+    min-height: 540px;
+    padding: 60px 7%;
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: 70px;
+    align-items: center;
+    background: var(--color-mint);
+}
+
+.welcome-content {
+    width: 100%;
+    max-width: 600px;
+}
+
+.welcome-badge {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--color-primary-strong);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+.welcome-badge span {
+    font-size: 14px;
+}
+
+.welcome-content h1 {
+    margin-top: 24px;
+    color: var(--black);
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -2px;
+    font-weight: 800;
+}
+
+.welcome-description {
+    max-width: 520px;
+    margin-top: 22px;
+    color: var(--gray);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.welcome-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.button-primary,
+.button-secondary {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.button-primary {
+    background: var(--color-primary);
+    color: var(--white);
+}
+
+.button-primary:hover {
+    background: var(--color-primary-strong);
+}
+
+.button-secondary {
+    border: 1px solid var(--color-border-strong);
+    background: var(--white);
+    color: var(--black);
+}
+
+.button-secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+.guest-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.check-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--white);
+    font-size: 12px;
+}
+
+/* =========================================
+   RIGHT VISUAL
+   ========================================= */
+
+.welcome-visual {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-card {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 410px;
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+}
+
+.visual-circle {
+    position: absolute;
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: var(--color-mint);
+}
+
+.visual-circle-top {
+    top: -60px;
+    right: -40px;
+}
+
+.visual-circle-bottom {
+    bottom: -70px;
+    left: -50px;
+}
+
+.logo-placeholder {
+    position: relative;
+    z-index: 2;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: var(--color-surface-muted);
+    border: 2px dashed var(--color-border-strong);
+}
+
+.logo-placeholder span {
+    color: var(--gray);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.prediction-preview {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    min-height: 70px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 14px;
+    background: var(--black);
+    color: var(--white);
+}
+
+.prediction-letter {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--color-primary);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.prediction-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.prediction-text span {
+    color: var(--color-on-dark-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.prediction-text strong {
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sound-icon {
+    color: var(--color-accent);
+    font-size: 16px;
+}
+
+/* =========================================
+   INFORMATION BAR
+   ========================================= */
+
+.welcome-info {
+    width: 100%;
+    min-height: 64px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--black);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.info-item span {
+    color: var(--color-primary);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .welcome-hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        padding: 50px 7%;
+    }
+
+    .welcome-content {
+        max-width: 650px;
+    }
+
+    .welcome-visual {
+        width: 100%;
+    }
+
+    .welcome-info {
+        padding: 18px 7%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .welcome-header {
+        height: 70px;
+    }
+
+    .welcome-hero {
+        padding: 45px 6%;
+    }
+
+    .welcome-content h1 {
+        font-size: 40px;
+        letter-spacing: -1.5px;
+    }
+
+    .welcome-buttons {
+        flex-wrap: wrap;
+    }
+
+    .visual-card {
+        height: 350px;
+        padding: 35px 20px;
+    }
+
+    .logo-placeholder {
+        width: 145px;
+        height: 145px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

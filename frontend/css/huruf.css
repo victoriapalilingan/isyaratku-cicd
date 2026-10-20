@@ -1,0 +1,569 @@
+
+/* =========================================
+   ISYARATKU - DETAIL HURUF
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: var(--color-navy);
+    --gray: var(--color-muted);
+    --light: var(--color-bg);
+    --white: var(--color-surface);
+    --border: var(--color-border);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    background: var(--light);
+    color: var(--black);
+    line-height: 1.5;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* HEADER */
+
+.detail-header {
+    height: 72px;
+    padding: 0 5.5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-bottom: 1px solid var(--border);
+}
+
+.detail-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 31px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.detail-nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.detail-nav a {
+    padding: 9px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: var(--color-navy);
+    font-size: 14px;
+    transition: 0.2s ease;
+    font-weight: 600;
+}
+
+.detail-nav a:hover {
+    background: var(--color-mint);
+    color: var(--color-navy);
+}
+
+.detail-nav a.active {
+    background: var(--color-primary);
+    color: var(--color-surface);
+}
+
+/* MAIN */
+
+.detail-main {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 55px 5.5% 65px;
+    flex: 1;
+}
+
+.back-link {
+    color: var(--color-primary-strong);
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--color-navy);
+}
+
+/* CONTENT */
+
+.detail-content {
+    margin-top: 42px;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 45px;
+    align-items: center;
+}
+
+/* GESTURE CARD */
+
+.gesture-card {
+    min-height: 510px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.gesture-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.gesture-top h1 {
+    font-size: clamp(60px, 6vw, 90px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: var(--color-primary-strong);
+}
+
+.gesture-badge {
+    margin-top: 3px;
+    padding: 8px 11px;
+    background: var(--color-mint);
+    border-radius: 25px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-primary-strong);
+    white-space: nowrap;
+}
+
+.gesture-preview {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 0;
+}
+
+.gesture-image-box {
+    position: relative;
+    width: min(230px, 80%);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-mint);
+    border-radius: 26px;
+    overflow: hidden;
+}
+
+.gesture-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.gesture-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-border-strong);
+}
+
+.gesture-placeholder svg {
+    width: 65px;
+    height: 65px;
+}
+
+.gesture-placeholder span {
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.gesture-letter-badge {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.gesture-caption {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-muted);
+}
+
+/* TUTORIAL */
+
+.tutorial-content {
+    width: 100%;
+}
+
+.eyebrow {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: var(--color-primary-strong);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.tutorial-content h2 {
+    max-width: 650px;
+    font-size: clamp(29px, 3vw, 43px);
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+}
+
+.tutorial-description {
+    max-width: 620px;
+    margin-top: 18px;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* STEPS */
+
+.tutorial-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.step-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 16px;
+    min-height: 70px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.step-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.step-text p {
+    margin-top: 4px;
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* PRACTICE BUTTON */
+
+.practice-button {
+    width: fit-content;
+    margin-top: 25px;
+    padding: 13px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+    min-height: 46px;
+}
+
+.practice-button:hover {
+    background: var(--color-primary-strong);
+    transform: translateY(-2px);
+}
+
+/* LETTER NAVIGATION */
+
+.letter-navigation {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.letter-nav-card {
+    min-height: 70px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: white;
+    color: var(--black);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.letter-nav-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.letter-nav-card.next {
+    justify-content: flex-end;
+}
+
+.nav-arrow {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-mint);
+    font-size: 18px;
+    color: var(--color-primary-strong);
+}
+
+.nav-arrow.dark {
+    background: var(--color-primary);
+    color: white;
+}
+
+.nav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nav-text small {
+    color: var(--color-muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.nav-text strong {
+    font-size: 16px;
+}
+
+.next .nav-text {
+    align-items: flex-end;
+}
+
+/* FOOTER */
+
+.detail-footer {
+    min-height: 125px;
+    padding: 25px 5.5%;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 45px;
+    background: var(--black);
+    color: white;
+}
+
+.footer-about strong {
+    font-size: 14px;
+}
+
+.footer-about p {
+    max-width: 290px;
+    margin-top: 7px;
+    color: var(--color-on-dark-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.footer-links a {
+    color: var(--color-on-dark-muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--color-surface);
+}
+
+.copyright {
+    color: var(--color-on-dark-muted);
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .detail-content {
+        gap: 25px;
+    }
+
+    .gesture-card {
+        min-height: 450px;
+    }
+
+    .detail-footer {
+        grid-template-columns: 1fr auto;
+    }
+
+    .copyright {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 750px) {
+    .detail-main {
+        padding: 35px 5% 45px;
+    }
+
+    .detail-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 28px;
+    }
+
+    .gesture-card {
+        min-height: 410px;
+    }
+
+    .tutorial-content h2 {
+        font-size: 32px;
+    }
+
+    .detail-footer {
+        grid-template-columns: 1fr;
+        padding: 30px 5%;
+        gap: 20px;
+    }
+
+    .copyright {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .detail-header {
+        height: auto;
+        padding: 15px 5%;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .detail-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .detail-nav a {
+        font-size: 13px;
+        padding: 9px 11px;
+    }
+
+    .gesture-card {
+        min-height: 350px;
+        padding: 18px;
+    }
+
+    .gesture-top h1 {
+        font-size: 60px;
+    }
+
+    .gesture-image-box {
+        width: 190px;
+    }
+
+    .tutorial-content h2 {
+        font-size: 29px;
+    }
+
+    .tutorial-description {
+        font-size: 13px;
+    }
+
+    .letter-navigation {
+        gap: 8px;
+    }
+
+    .letter-nav-card {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .nav-arrow {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-text small {
+        font-size: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

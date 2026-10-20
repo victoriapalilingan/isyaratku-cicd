@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Praktik Gesture - IsyaratKu</title>
+
+    <link rel="stylesheet" href="./css/theme.css">
+    <link rel="stylesheet" href="./css/praktik.css">
+    <link rel="stylesheet" href="./css/testmode.css">
+
+    <script src="./js/main.js" defer></script>
+    <script src="./js/lighting.js" defer></script>
+    <script src="./js/practice.js" defer></script>
+    <script src="./js/webcam.js" defer></script>
+    <!-- Mode pengujian Bab 3, aktif hanya dengan ?uji=1 -->
+    <script src="./js/testmode.js" defer></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="practice-header">
+
+        <a href="home.html" class="practice-brand">
+            <span class="brand-icon">Is</span>
+            <span>IsyaratKu</span>
+        </a>
+
+        <nav class="practice-nav"
+             aria-label="Navigasi utama">
+
+            <a href="home.html">Beranda</a>
+
+            <a href="belajar.html">
+                Belajar Alfabet
+            </a>
+
+            <a href="praktik.html"
+               class="active"
+               aria-current="page">
+                Praktik Gesture
+            </a>
+
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="practice-main">
+
+        <!-- INTRO -->
+        <section class="practice-intro">
+
+            <div class="intro-copy">
+
+                <h1>Praktik Gesture</h1>
+
+                <p>
+                    Peragakan huruf BISINDO di depan kamera.
+                    Gunakan satu atau dua tangan sesuai hurufnya,
+                    lalu tahan sampai prediksi stabil.
+                </p>
+            </div>
+
+            <div class="privacy-notice">
+                <span aria-hidden="true">♢</span>
+
+                <p>
+                    Gambar kamera hanya dikirim ke server lokal
+                    di perangkat ini untuk diproses dan tidak disimpan.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- WORKSPACE -->
+        <section class="practice-workspace">
+
+            <!-- KAMERA -->
+            <div class="camera-section">
+
+                <div class="camera-container"
+                     id="camera-container">
+
+                    <video
+                        id="webcam"
+                        autoplay
+                        muted
+                        playsinline>
+                    </video>
+
+                    <canvas
+                        id="overlay"
+                        aria-hidden="true">
+                    </canvas>
+
+                    <!-- PLACEHOLDER -->
+                    <div class="camera-placeholder"
+                         id="cameraPlaceholder">
+
+                        <div class="hand-guide">
+
+                            <svg viewBox="0 0 100 120"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 aria-hidden="true">
+
+                                <path d="
+                                  M28 95 C19 89 14 75 16 66
+                                  C17 61 22 60 26 65
+                                  L31 72 L31 31
+                                  C31 22 42 22 42 31
+                                  L42 57 L42 21
+                                  C42 12 53 12 53 21
+                                  L53 57 L53 27
+                                  C53 18 64 18 64 27
+                                  L64 60 L64 38
+                                  C64 29 75 30 75 39
+                                  L75 79 C75 96 63 105 47 105
+                                  C39 105 33 102 28 95 Z
+                                "/>
+
+                            </svg>
+                        </div>
+
+                        <p>
+                            Posisikan tangan di area panduan
+                        </p>
+
+                    </div>
+
+                    <!-- CAMERA STATUS -->
+                    <span class="camera-status"
+                          id="cameraStatus">
+
+                        <span class="status-dot"></span>
+
+                        Kamera belum aktif
+                    </span>
+
+                    <!-- STATUS SISTEM: tampil setelah status diketahui -->
+                    <span class="ai-status"
+                          id="aiStatus"
+                          hidden></span>
+
+                </div>
+
+                <!-- CAMERA CONTROLS -->
+                <div class="camera-controls">
+
+                    <div class="control-buttons">
+
+                        <button
+                            id="start-camera"
+                            class="primary-button"
+                            type="button">
+
+                            <span aria-hidden="true">▣</span>
+                            Mulai Kamera
+                        </button>
+
+                        <button
+                            id="selectLetterButton"
+                            class="secondary-button"
+                            type="button">
+
+                            <span aria-hidden="true">▦</span>
+                            Pilih huruf panduan
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- LIGHTING -->
+                <p
+                    id="lighting-status"
+                    class="lighting-status"
+                    role="status"
+                    aria-live="polite"></p>
+
+                <!-- CAMERA ERROR -->
+                <p
+                    id="cameraError"
+                    class="camera-error"
+                    role="alert"
+                    hidden>
+                </p>
+
+                <!-- PERFORMANCE PANEL -->
+                <details class="performance-panel">
+
+                    <summary>
+                        Detail performa
+                    </summary>
+
+                    <p class="performance-empty">
+                        Metrik tersedia saat kamera aktif.
+                    </p>
+
+                    <div class="performance-grid">
+
+                        <div class="performance-item">
+                            <span>Deteksi tangan</span>
+                            <strong id="metricDetection">
+                                —
+                            </strong>
+                        </div>
+
+                        <div class="performance-item">
+                            <span>Pemrosesan server</span>
+                            <strong id="metricProcessing">
+                                —
+                            </strong>
+                        </div>
+
+                        <div class="performance-item">
+                            <span>Waktu respons</span>
+                            <strong id="metricRequest">
+                                —
+                            </strong>
+                        </div>
+
+                        <div class="performance-item">
+                            <span>FPS klasifikasi</span>
+                            <strong id="metricFps">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <ul class="performance-note">
+                        <li>
+                            Deteksi tangan: waktu MediaPipe
+                            mendeteksi 21 titik landmark per tangan
+                            di server.
+                        </li>
+                        <li>
+                            Pemrosesan server: total waktu di server,
+                            termasuk deteksi tangan dan klasifikasi huruf.
+                        </li>
+                        <li>
+                            Waktu respons: sejak frame dikirim browser
+                            sampai hasilnya diterima.
+                        </li>
+                        <li>
+                            FPS klasifikasi: jumlah frame per detik yang
+                            sampai ke klasifikasi huruf (status success).
+                            Frame tanpa tangan atau tanpa prediksi
+                            tidak dihitung.
+                        </li>
+                    </ul>
+
+                </details>
+
+            </div>
+
+            <!-- PANEL HASIL -->
+            <aside class="result-section">
+
+                <div class="result-card"
+                     id="prediction-result">
+
+                    <div class="result-header">
+
+                        <h2>
+                            Hasil prediksi
+                        </h2>
+
+                    </div>
+
+                    <!-- HURUF PANDUAN -->
+                    <div class="selected-letter-info">
+
+                        <span>
+                            Huruf panduan:
+                        </span>
+
+                        <strong id="selectedLetter">
+                            Belum dipilih
+                        </strong>
+
+                    </div>
+
+                    <!-- PREDIKSI -->
+                    <div class="prediction-display">
+
+                        <div
+                            class="prediction-letter"
+                            id="prediction">
+                            —
+                        </div>
+
+                        <div class="prediction-details"
+                             id="predictionDetails"
+                             hidden>
+
+                            <strong
+                                id="predictionDescription">
+                            </strong>
+
+                            <span id="confidenceText">
+                            </span>
+
+                            <div class="confidence-track">
+
+                                <div
+                                    class="confidence-fill"
+                                    id="confidenceBar">
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- PESAN PREDIKSI -->
+                    <p
+                        class="prediction-message"
+                        id="predictionMessage"
+                        role="status">
+
+                        Nyalakan kamera untuk mulai mengenali huruf.
+                    </p>
+
+                    <!-- BUTTON -->
+                    <div class="result-actions">
+
+                        <button
+                            type="button"
+                            class="sound-switch"
+                            id="soundSwitch"
+                            role="switch"
+                            aria-checked="false"
+                            aria-describedby="soundHint">
+
+                            <span
+                                class="sound-switch-track"
+                                aria-hidden="true">
+                                <span class="sound-switch-thumb"></span>
+                            </span>
+
+                            <span id="soundSwitchLabel">Suara OFF</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="retry-button"
+                            id="retryButton">
+
+                            ↻ Coba Lagi
+                        </button>
+
+                    </div>
+
+                    <!-- STATUS SUARA -->
+                    <p
+                        class="sound-hint"
+                        id="soundHint"
+                        role="status"></p>
+
+                </div>
+
+                <!-- TIPS -->
+                <div class="tips-card">
+
+                    <h3>
+                        Agar tangan mudah dikenali
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            <span class="tip-check">✓</span>
+                            Gunakan pencahayaan dari depan.
+                        </li>
+
+                        <li>
+                            <span class="tip-check">✓</span>
+                            Pastikan seluruh tangan, termasuk pergelangan, terlihat.
+                        </li>
+
+                        <li>
+                            <span class="tip-check">✓</span>
+                            Gunakan latar belakang yang sederhana.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </aside>
+
+        </section>
+    </main>
+
+    <!-- MODAL PILIH HURUF -->
+    <dialog
+        id="letterDialog"
+        class="letter-dialog">
+
+        <div class="dialog-heading">
+
+            <div>
+                <h2>Pilih Huruf Panduan</h2>
+
+                <p>
+                    Pilih huruf A–Z yang ingin dipraktikkan.
+                </p>
+            </div>
+
+            <button
+                id="closeLetterDialog"
+                type="button"
+                class="dialog-close"
+                aria-label="Tutup">
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="letterPickerGrid"
+            class="letter-picker-grid">
+        </div>
+
+        <div class="dialog-actions">
+
+            <button
+                id="clearLetterButton"
+                type="button">
+                Hapus Pilihan
+            </button>
+
+            <button
+                id="doneLetterButton"
+                type="button">
+                Selesai
+            </button>
+
+        </div>
+
+    </dialog>
+
+    <!-- FOOTER -->
+    <footer class="practice-footer">
+
+        <div class="footer-about">
+
+            <strong>IsyaratKu</strong>
+
+            <p>
+                Belajar BISINDO dengan cara
+                yang terbuka, ramah,
+                dan mudah dipraktikkan.
+            </p>
+
+        </div>
+
+        <nav
+            class="footer-links"
+            aria-label="Navigasi footer">
+
+            <a href="home.html">Beranda</a>
+
+            <a href="belajar.html">
+                Alfabet A–Z
+            </a>
+
+            <a href="praktik.html">
+                Praktik Gesture
+            </a>
+
+        </nav>
+
+        <span>© 2026 IsyaratKu</span>
+
+    </footer>
+
+</body>
+</html>
