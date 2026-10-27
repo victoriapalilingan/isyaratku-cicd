@@ -148,6 +148,157 @@
     color: var(--color-danger);
 }
 
+/* Mode otomatis */
+
+.test-auto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    margin-top: 12px;
+}
+
+.test-auto .primary-button {
+    min-height: 42px;
+    min-width: 170px;
+}
+
+.test-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-navy);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.test-keys {
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.test-keys kbd {
+    padding: 1px 6px;
+    border: 1px solid var(--color-border-strong);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: white;
+    color: var(--color-navy);
+    font: 600 11px var(--font-sans);
+}
+
+/* Hitung mundur besar di atas video kamera */
+
+.test-overlay {
+    position: absolute;
+    top: 52px;
+    left: 50%;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+        "label label"
+        "letter count"
+        "hint hint";
+    align-items: center;
+    column-gap: 18px;
+    padding: 10px 22px 12px;
+    transform: translateX(-50%);
+    border: 3px solid transparent;
+    border-radius: 20px;
+    background: rgba(16, 36, 43, 0.82);
+    color: white;
+    font-family: var(--font-sans);
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.test-overlay[hidden] {
+    display: none;
+}
+
+.ov-label {
+    grid-area: label;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.ov-letter {
+    grid-area: letter;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.ov-count {
+    grid-area: count;
+    min-width: 1ch;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.ov-count:empty {
+    display: none;
+}
+
+.ov-hint {
+    grid-area: hint;
+    margin-top: 2px;
+    color: #DCE9E6;
+    font-size: 13px;
+}
+
+.ov-hint:empty {
+    display: none;
+}
+
+.test-overlay[data-view="prep"] {
+    border-color: var(--color-accent);
+}
+
+.test-overlay[data-view="prep"] .ov-count,
+.test-overlay[data-view="prep"] .ov-label {
+    color: var(--color-accent);
+}
+
+.test-overlay[data-view="recording"] {
+    border-color: #F04438;
+}
+
+.test-overlay[data-view="recording"] .ov-label,
+.test-overlay[data-view="recording"] .ov-count {
+    color: #FF8A80;
+}
+
+.test-overlay[data-view="ok"] {
+    border-color: #32D583;
+    background: rgba(8, 60, 36, 0.86);
+}
+
+.test-overlay[data-view="bad"] {
+    border-color: #F04438;
+    background: rgba(90, 16, 12, 0.86);
+}
+
+.test-overlay[data-view="paused"] {
+    border-color: #98A2B3;
+}
+
+@media (max-width: 700px) {
+    .test-overlay {
+        top: 44px;
+        padding: 6px 14px 8px;
+    }
+
+    .ov-letter { font-size: 42px; }
+    .ov-count { font-size: 48px; }
+}
+
 /* Tombol */
 
 .test-actions {

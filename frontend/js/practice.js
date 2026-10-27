@@ -20,11 +20,14 @@
     const STABLE_MIN_VOTES = 4;
     const STABLE_MAX_MISSES = 3;
 
-    // Prediksi dengan confidence di bawah ambang tidak ikut
-    // voting stabilizer dan dihitung sebagai frame tanpa hasil.
+    // Prediksi dengan confidence di bawah ambang diabaikan: tidak
+    // ikut voting dan TIDAK dihitung miss, sehingga huruf stabil
+    // tidak hilang hanya karena beberapa frame kurang yakin.
     // Pada 447 citra test (pipeline aplikasi), ambang 0,6
-    // menyaring 10 dari 40 prediksi salah dan 5 prediksi benar;
-    // akurasi prediksi yang ditampilkan naik dari 87,6% ke 90,3%.
+    // menyaring 10 dari 40 prediksi salah dan 5 prediksi benar.
+    // Pilot real-time skenario 1 (78 percobaan): jika frame
+    // kurang yakin dihitung miss, akurasi 88,5%; jika diabaikan,
+    // 93,6% pada frame yang sama.
     const MIN_CONFIDENCE = 0.6;
 
     function createStabilizer(
@@ -293,6 +296,10 @@
         window.history.replaceState({}, "", url);
         renderSelectedLetter();
         resetPrediction();
+
+        document.dispatchEvent(new CustomEvent("isyarat:target", {
+            detail: { letter: selectedLetter }
+        }));
     }
 
     // Pesan bawaan mengikuti status kamera saat ini.
@@ -377,7 +384,19 @@
         );
 
         // Sumber suara hanya huruf stabil yang benar-benar tampil.
+        const previousStable = stableLetter;
         stableLetter = currentPrediction;
+
+        // Dipakai praktik-progress.js untuk menandai progres belajar.
+        if (stableLetter && stableLetter !== previousStable) {
+            document.dispatchEvent(new CustomEvent("isyarat:stable", {
+                detail: {
+                    letter: stableLetter,
+                    target: selectedLetter,
+                    confidence: result.confidence
+                }
+            }));
+        }
 
         if (!soundOn || !stableLetter) {
             return;
@@ -405,10 +424,21 @@
             typeof confidence === "number" &&
             confidence < MIN_CONFIDENCE
         ) {
-            return handleNoPrediction(
+            const state = stabilizer.state();
+            const hint =
                 "Model kurang yakin dengan gesture ini. " +
-                "Perbaiki posisi tangan atau pencahayaan."
-            );
+                "Perbaiki posisi tangan atau pencahayaan.";
+
+            if (state.letter) {
+                // Huruf stabil tetap tampil; hanya diberi petunjuk.
+                showStable(state);
+                predictionMessage.textContent =
+                    `${hint} Menampilkan hasil terakhir ${state.letter}.`;
+            } else {
+                resetPrediction(hint);
+            }
+
+            return state;
         }
 
         const result = stabilizer.addPrediction(normalized, confidence);
@@ -523,6 +553,7 @@
         resetSession,
         createStabilizer,
         getSelectedLetter: () => selectedLetter,
+        chooseLetter,
         getStableState: () => stabilizer.state(),
         getSessionToken: () => sessionToken,
         // Dicatat mode pengujian sebagai konfigurasi sistem

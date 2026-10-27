@@ -5,23 +5,25 @@
    ========================================= */
 
 :root {
-    /* Palet utama */
-    --color-primary: #087F8C;
-    --color-primary-strong: #066570;
-    --color-navy: #17313A;
-    --color-bg: #F7FAF8;
-    --color-mint: #E1F3EE;
-    --color-accent: #F4C95D;
+    /* Palet editorial (dari ui-version3): tinta, kertas,
+       dan satu warna sinyal biru. */
+    --color-primary: #3979B9;
+    --color-primary-strong: #285F96;
+    --color-navy: #243D55;
+    --color-bg: #F4F8FB;
+    --color-mint: #E7F0F7;
+    --color-accent: #D2E3EF;
     --color-surface: #FFFFFF;
 
-    /* Turunan netral */
-    --color-muted: #52676C;
-    --color-placeholder: #5B716D;
-    --color-border: #D6E5E0;
-    --color-border-strong: #7A928E;
-    --color-surface-muted: #EEF6F3;
-    --color-on-dark-muted: #B9CDC8;
-    --color-camera: #10242B;
+    /* Turunan netral. Muted digelapkan dari #61778A agar
+       kontras teks kecil di atas kertas memenuhi WCAG AA. */
+    --color-muted: #4D6275;
+    --color-placeholder: #5A6F82;
+    --color-border: #D3DFE8;
+    --color-border-strong: #839CAF;
+    --color-surface-muted: #E9F0F6;
+    --color-on-dark-muted: #B9CCDC;
+    --color-camera: #1B2F42;
 
     /* Warna semantik */
     --color-success: #1E7A4C;
@@ -36,11 +38,14 @@
 
     /* Bentuk */
     --shadow-card:
-        0 1px 2px rgba(23, 49, 58, 0.06),
-        0 8px 20px rgba(23, 49, 58, 0.06);
+        0 1px 2px rgba(36, 61, 85, 0.05),
+        0 8px 20px rgba(36, 61, 85, 0.05);
     --font-sans:
-        "Segoe UI", system-ui, -apple-system, Roboto,
-        "Helvetica Neue", Arial, sans-serif;
+        "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+    /* Huruf A–Z besar dan judul editorial */
+    --font-serif: Georgia, "Times New Roman", serif;
+    /* Label kecil bergaya indeks */
+    --font-mono: "Courier New", Courier, monospace;
 }
 
 ::selection {

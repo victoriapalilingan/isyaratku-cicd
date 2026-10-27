@@ -1,0 +1,423 @@
+/* =========================================
+   ISYARATKU - GAYA EDITORIAL (dari ui-version3)
+   Tinta, kertas, satu warna sinyal biru; huruf
+   A–Z besar memakai serif; label kecil bergaya
+   indeks. Dimuat paling akhir di setiap halaman.
+   Hanya tampilan: tidak ada perubahan perilaku.
+   ========================================= */
+
+body {
+    background: var(--color-bg);
+    font-family: var(--font-sans);
+    letter-spacing: -0.005em;
+}
+
+/* WORDMARK + HEADER */
+
+.site-header {
+    min-height: 84px;
+    background: rgba(244, 248, 251, 0.92);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.site-header.is-transparent {
+    background: rgba(244, 248, 251, 0.85);
+}
+
+.wordmark {
+    display: inline-flex;
+    align-items: flex-start;
+    color: var(--color-navy);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    line-height: 1;
+}
+
+.wordmark-dot {
+    margin-left: 2px;
+    color: var(--color-primary);
+}
+
+.site-nav {
+    gap: 28px;
+}
+
+.site-nav a {
+    padding: 6px 0;
+    border-radius: 0;
+    color: var(--color-navy);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.site-nav a:hover {
+    background: none;
+    color: var(--color-primary-strong);
+}
+
+.site-nav a[aria-current="page"] {
+    background: none;
+    color: var(--color-navy);
+    box-shadow: inset 0 -1.5px 0 var(--color-navy);
+}
+
+.site-user {
+    border-color: var(--color-border-strong);
+    border-radius: 999px;
+    background: transparent;
+}
+
+.site-avatar {
+    background: var(--color-navy);
+    color: white;
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+@media (max-width: 760px) {
+    .site-header {
+        min-height: 0;
+    }
+
+    .site-nav {
+        gap: 20px;
+    }
+}
+
+/* TOMBOL: utama tetap solid agar jelas bisa diklik */
+
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--color-navy);
+    box-shadow: none;
+}
+
+.btn-primary:hover {
+    background: var(--color-primary-strong);
+}
+
+.btn-dark:hover {
+    background: var(--color-primary-strong);
+}
+
+.btn-ghost {
+    border-color: var(--color-navy);
+    background: transparent;
+}
+
+.btn-ghost:hover {
+    background: var(--color-mint);
+}
+
+/* FOOTER */
+
+.site-footer {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-navy);
+    color: var(--color-muted);
+}
+
+.site-footer strong,
+.site-footer .wordmark {
+    color: var(--color-navy);
+}
+
+.site-footer a {
+    color: var(--color-navy);
+}
+
+.site-footer a:hover {
+    color: var(--color-primary-strong);
+}
+
+.site-footer :focus-visible {
+    outline-color: var(--color-primary);
+}
+
+.footer-tagline {
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+/* LABEL BERGAYA INDEKS (mono, huruf kapital, min. 12px) */
+
+.hero-eyebrow,
+.dash-eyebrow,
+.tour-eyebrow,
+.exam-eyebrow,
+.eyebrow,
+.target-copy span,
+.readout-copy small {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.hero-eyebrow {
+    box-shadow: none;
+    border: 1px solid var(--color-border-strong);
+    background: transparent;
+    color: var(--color-navy);
+}
+
+/* HURUF A–Z BESAR MEMAKAI SERIF */
+
+.letter-tile,
+.card-header strong,
+.gesture-top h1,
+.gesture-letter-badge,
+.prediction-letter,
+.target-copy strong,
+.exam-current-letter,
+.exam-ov-letter,
+.exam-chip,
+.exam-wrong strong,
+.review-letters a,
+.mock-letter,
+.tile,
+.hero-fallback span,
+.how-cam span {
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+/* Angka tetap sans: angka Georgia bergaya old-style
+   (tinggi tidak rata) sehingga kurang cocok untuk statistik. */
+.ring-label strong,
+.stat strong,
+.exam-score strong,
+.learn-progress-top strong,
+.fact strong {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+}
+
+.gesture-top h1 {
+    letter-spacing: -0.04em;
+}
+
+/* JUDUL EDITORIAL */
+
+.hero h1,
+.dash-hello h1,
+.tour-copy h1,
+.how-heading h2,
+.intro-row h1,
+.intro-copy h1,
+.tutorial-content h2,
+.section-head h2 {
+    font-weight: 500;
+    letter-spacing: -0.04em;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 5.6vw, 76px);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+}
+
+.hero h1 span {
+    color: var(--color-primary);
+}
+
+/* FOTO CONTOH: grayscale di daftar dan landing.
+   Halaman detail dan target praktik tetap berwarna
+   supaya bentuk jari terlihat jelas. */
+
+.alphabet-card img,
+.how-step img,
+.photo-fan img {
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.2s ease;
+}
+
+.alphabet-card:hover img,
+.alphabet-card:focus-visible img {
+    filter: none;
+}
+
+/* LANDING */
+
+body.landing {
+    background: var(--color-bg);
+}
+
+.hero-stage {
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), transparent 55%),
+        linear-gradient(160deg, #EEF4F9 0%, #E2ECF4 60%, #D6E4EF 100%);
+    border-radius: 24px;
+    box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.hero-fallback span {
+    box-shadow: 0 6px 0 #C9D8E4, 0 14px 24px rgba(36, 61, 85, 0.12);
+}
+
+.hero-readout {
+    border-radius: 14px;
+    background: var(--color-navy);
+}
+
+.readout-copy b {
+    color: var(--color-accent);
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+.fact,
+.how-step,
+.resume-card {
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.how-cam {
+    background: var(--color-camera);
+}
+
+.how-cam i {
+    border-color: rgba(210, 227, 239, 0.7);
+}
+
+.how-mark {
+    background: var(--color-mint);
+    color: var(--color-primary-strong);
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+.mode-hints strong {
+    font-weight: 700;
+}
+
+/* DASHBOARD */
+
+.dash-hero {
+    border-radius: 20px;
+    background:
+        radial-gradient(500px 300px at 100% 0%, rgba(121, 169, 212, 0.25), transparent 60%),
+        linear-gradient(135deg, var(--color-navy), #1B2F42);
+}
+
+.dash-hero .btn-primary {
+    background: white;
+    color: var(--color-navy);
+}
+
+.dash-hero .btn-primary:hover {
+    background: var(--color-accent);
+}
+
+.ring-learned {
+    stroke: #79A9D4;
+}
+
+.ring-practiced {
+    stroke: white;
+}
+
+.stat-dot.is-learned {
+    background: #79A9D4;
+}
+
+.stat-dot.is-practiced {
+    background: var(--color-navy);
+}
+
+.group,
+.stat,
+.shortcut,
+.exam-card {
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.letter-tile {
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.letter-tile[data-status="practiced"]::after {
+    background: white;
+    color: var(--color-primary-strong);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.shortcut.is-dark {
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+}
+
+.shortcut.is-dark > span:last-child {
+    color: var(--color-on-dark-muted);
+}
+
+/* DETAIL HURUF: tombol praktik siap */
+
+.practice-button.is-ready {
+    box-shadow: 0 0 0 4px rgba(57, 121, 185, 0.35);
+    animation-name: ready-pulse-blue;
+}
+
+@keyframes ready-pulse-blue {
+    50% { box-shadow: 0 0 0 9px rgba(57, 121, 185, 0.12); }
+}
+
+/* PRAKTIK DAN UJIAN */
+
+.exam-overlay[data-view="answer"] {
+    border-color: #79A9D4;
+}
+
+.exam-overlay[data-view="prep"],
+.exam-overlay[data-view="prep"] .exam-ov-label,
+.exam-overlay[data-view="prep"] .exam-ov-count {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* TUTORIAL: bingkai kamera mengikuti palet biru */
+
+.frame-screen {
+    background: linear-gradient(180deg, #34506A, #22384D);
+}
+
+.frame-person {
+    background: #4A6680;
+}
+
+.frame-person::before {
+    background: #5B7891;
+}
+
+.frame-hands {
+    border-color: var(--color-accent);
+}
+
+.frame-light {
+    color: #F4D47C;
+}
+
+/* KETERBACAAN: teks kecil minimal 12px */
+
+.status-badge,
+.card-header .status-badge,
+.instruction,
+.exam-dots li,
+.camera-status,
+.ai-status {
+    font-size: 12px;
+}
+
+.card-header .status-badge {
+    padding: 2px 7px;
+}

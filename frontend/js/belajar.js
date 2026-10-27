@@ -52,12 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const title = document.createElement("strong");
         title.textContent = letter;
 
-        const arrow = document.createElement("span");
-        arrow.className = "card-arrow";
-        arrow.textContent = "↗";
-        arrow.setAttribute("aria-hidden", "true");
+        // Status belajar dari progress.js
+        const badge = document.createElement("span");
+        badge.className = "status-badge";
 
-        header.append(title, arrow);
+        header.append(title, badge);
 
         // Image
         const gesture = document.createElement("div");
@@ -118,6 +117,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         grid.replaceChildren(fragment);
     }
+
+    const STATUS_TEXT = {
+        new: "Belum",
+        viewed: "Dipahami",
+        practiced: "Dipraktikkan"
+    };
+
+    const STATUS_LABEL = {
+        new: "belum dipelajari",
+        viewed: "sudah dipahami",
+        practiced: "berhasil dipraktikkan"
+    };
+
+    // Status kartu dan ringkasan progres
+    function renderStatus() {
+        const progress = window.IsyaratProgress;
+        if (!progress) return;
+
+        grid.querySelectorAll(".alphabet-card").forEach(card => {
+            const letter = card.dataset.letter;
+            const status = progress.statusOf(letter);
+            const badge = card.querySelector(".status-badge");
+
+            card.dataset.status = status;
+            badge.dataset.status = status;
+            badge.textContent = STATUS_TEXT[status];
+            card.setAttribute(
+                "aria-label",
+                `Huruf ${letter}, ${STATUS_LABEL[status]}. Buka contoh gesture`
+            );
+        });
+
+        const { learned, practiced, total } = progress.counts();
+
+        document.getElementById("learnCount").textContent =
+            `${learned}/${total}`;
+        document.getElementById("learnPracticed").textContent =
+            `${practiced} berhasil dipraktikkan`;
+        document.getElementById("learnBarLearned").style.width =
+            `${(learned / total) * 100}%`;
+        document.getElementById("learnBarPracticed").style.width =
+            `${(practiced / total) * 100}%`;
+    }
+
+    document.addEventListener("isyarat:progress", renderStatus);
 
     // Filter
     function matchesFilter(letter) {
@@ -194,6 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderCards();
+    renderStatus();
     updateCards();
 
     console.log("IsyaratKu - Belajar Alfabet berhasil dimuat.");

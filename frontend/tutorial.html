@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tutorial – IsyaratKu</title>
+
+    <link rel="stylesheet" href="./css/theme.css?v=20261027e">
+    <link rel="stylesheet" href="./css/tutorial.css?v=20261027e">
+    <link rel="stylesheet" href="./css/app.css?v=20261027e">
+    <link rel="stylesheet" href="./css/editorial.css?v=20261027e">
+
+    <script src="./js/progress.js?v=20261027e" defer></script>
+    <script src="./js/site.js?v=20261027e" defer></script>
+    <script src="./js/onboarding.js?v=20261027e" defer></script>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="site-brand">
+            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
+        </a>
+
+        <span class="tour-counter" id="tourCounter" aria-live="polite">Langkah 1 dari 5</span>
+
+        <a href="home.html" class="btn btn-quiet tour-skip" id="skipTour">Lewati tutorial</a>
+    </header>
+
+    <main class="tour">
+
+        <ol class="tour-dots" id="tourDots" aria-label="Langkah tutorial"></ol>
+
+        <!-- 1. APA ITU BISINDO -->
+        <section class="tour-step" data-step="1" aria-labelledby="t1">
+            <div class="tour-visual">
+                <div class="photo-fan">
+                    <img src="assets/bisindo/I.jpg" alt="Gesture huruf I">
+                    <img src="assets/bisindo/S.jpg" alt="Gesture huruf S">
+                    <img src="assets/bisindo/A.jpg" alt="Gesture huruf A">
+                </div>
+            </div>
+            <div class="tour-copy">
+                <span class="tour-eyebrow">Selamat datang<span id="tourName"></span></span>
+                <h1 id="t1">Apa itu BISINDO?</h1>
+                <p>
+                    BISINDO (Bahasa Isyarat Indonesia) adalah bahasa isyarat
+                    yang tumbuh dan dipakai sehari-hari oleh teman Tuli di
+                    Indonesia. Di IsyaratKu kamu mulai dari dasarnya:
+                    <strong>alfabet A–Z</strong>.
+                </p>
+                <ul class="tour-points">
+                    <li>Sebagian huruf memakai <strong>dua tangan</strong>, misalnya A dan B.</li>
+                    <li>Setiap huruf punya foto contoh yang bisa kamu tiru.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. MEMBACA FOTO -->
+        <section class="tour-step" data-step="2" aria-labelledby="t2" hidden>
+            <div class="tour-visual">
+                <figure class="tilt-card" id="tiltCard">
+                    <img src="assets/bisindo/A.jpg" alt="Contoh gesture huruf A">
+                    <span class="pin pin-1">1</span>
+                    <span class="pin pin-2">2</span>
+                    <span class="pin pin-3">3</span>
+                    <figcaption>Huruf A</figcaption>
+                </figure>
+            </div>
+            <div class="tour-copy">
+                <span class="tour-eyebrow">Membaca contoh</span>
+                <h1 id="t2">Perhatikan tiga hal di setiap foto</h1>
+                <ol class="tour-list">
+                    <li><b>1</b><span><strong>Bentuk jari</strong>: jari mana yang lurus, ditekuk, atau saling menyentuh.</span></li>
+                    <li><b>2</b><span><strong>Posisi kedua tangan</strong>: berdampingan, bertumpuk, atau satu tangan saja.</span></li>
+                    <li><b>3</b><span><strong>Arah telapak</strong>: menghadap kamera, ke samping, atau ke bawah.</span></li>
+                </ol>
+                <p class="tour-hint">Foto dilihat dari sisi kamera, sama seperti saat kamu praktik.</p>
+            </div>
+        </section>
+
+        <!-- 3. POSISI DAN CAHAYA -->
+        <section class="tour-step" data-step="3" aria-labelledby="t3" hidden>
+            <div class="tour-visual">
+                <div class="frame-demo">
+                    <div class="frame-screen">
+                        <span class="frame-light" aria-hidden="true">☀</span>
+                        <span class="frame-person" aria-hidden="true"></span>
+                        <span class="frame-hands" aria-hidden="true"></span>
+                        <span class="frame-label">±40–60 cm dari kamera</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tour-copy">
+                <span class="tour-eyebrow">Sebelum praktik</span>
+                <h1 id="t3">Posisi dan cahaya yang baik</h1>
+                <ul class="tour-checks">
+                    <li>Cahaya dari depan, bukan dari belakang badan.</li>
+                    <li>Seluruh tangan sampai pergelangan masuk ke layar.</li>
+                    <li>Latar belakang polos lebih mudah dikenali.</li>
+                    <li>Tangan menghadap lurus ke kamera, jangan terlalu miring.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. PRAKTIK -->
+        <section class="tour-step" data-step="4" aria-labelledby="t4" hidden>
+            <div class="tour-visual">
+                <div class="mock-result">
+                    <div class="mock-top">
+                        <span>Huruf target</span>
+                        <strong>L</strong>
+                    </div>
+                    <div class="mock-letter">L</div>
+                    <div class="mock-conf">
+                        <span>Keyakinan rata-rata 92.4%</span>
+                        <i><b></b></i>
+                    </div>
+                    <div class="mock-ok">✓ Berhasil! Huruf L dikenali.</div>
+                </div>
+            </div>
+            <div class="tour-copy">
+                <span class="tour-eyebrow">Praktik di kamera</span>
+                <h1 id="t4">Tahan gesture sampai stabil</h1>
+                <p>
+                    Tekan <strong>Mulai Kamera</strong>, peragakan huruf target,
+                    lalu tahan sekitar dua detik. Sistem baru menampilkan huruf
+                    setelah hasilnya konsisten di beberapa frame.
+                </p>
+                <ul class="tour-points">
+                    <li><strong>Keyakinan</strong> menunjukkan seberapa yakin model. Di bawah 60% hasilnya diabaikan.</li>
+                    <li>Gambar kamera hanya diproses lalu dibuang, tidak disimpan.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. PROGRES -->
+        <section class="tour-step" data-step="5" aria-labelledby="t5" hidden>
+            <div class="tour-visual">
+                <div class="status-demo">
+                    <div class="status-row"><span class="tile">K</span><span class="status-badge" data-status="new">Belum dipelajari</span></div>
+                    <div class="status-row"><span class="tile">L</span><span class="status-badge" data-status="viewed">Sudah dipahami</span></div>
+                    <div class="status-row"><span class="tile is-done">M</span><span class="status-badge" data-status="practiced">Berhasil dipraktikkan</span></div>
+                </div>
+            </div>
+            <div class="tour-copy">
+                <span class="tour-eyebrow">Progres belajar</span>
+                <h1 id="t5">Pantau progres setiap huruf</h1>
+                <p>
+                    Setiap huruf punya status. Tandai huruf yang sudah kamu
+                    pahami, lalu praktikkan sampai berhasil. Dashboard
+                    menunjukkan huruf yang perlu dipelajari berikutnya.
+                </p>
+                <p class="tour-hint" id="tourStorageHint">
+                    Tidak perlu akun. Progres tersimpan di browser ini, jadi
+                    akan hilang jika data browser dihapus atau kamu memakai
+                    perangkat lain.
+                </p>
+            </div>
+        </section>
+
+        <div class="tour-nav">
+            <button type="button" class="btn btn-ghost" id="prevStep">← Kembali</button>
+            <button type="button" class="btn btn-primary" id="nextStep">Lanjut →</button>
+        </div>
+
+    </main>
+
+</body>
+</html>

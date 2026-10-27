@@ -1,486 +1,222 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Dashboard Belajar – IsyaratKu</title>
 
-    <title>Beranda - IsyaratKu</title>
+    <link rel="stylesheet" href="./css/theme.css?v=20261027e">
+    <link rel="stylesheet" href="./css/dashboard.css?v=20261027e">
+    <link rel="stylesheet" href="./css/app.css?v=20261027e">
+    <link rel="stylesheet" href="./css/editorial.css?v=20261027e">
 
-    <link
-        rel="stylesheet"
-        href="css/theme.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="css/home.css"
-    >
-
+    <script src="./js/progress.js?v=20261027e" defer></script>
+    <script src="./js/site.js?v=20261027e" defer></script>
+    <script src="./js/dashboard.js?v=20261027e" defer></script>
 </head>
-
 
 <body>
 
-
-    <!-- =====================================
-         HEADER
-         ===================================== -->
-
-    <header class="home-header">
-
-
-        <a
-            href="home.html"
-            class="home-brand"
-        >
-
-            <div class="brand-icon">
-                Is
-            </div>
-
-            <span>
-                IsyaratKu
-            </span>
-
+    <header class="site-header">
+        <a href="index.html" class="site-brand">
+            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
         </a>
 
-
-        <nav class="home-nav">
-
-            <a
-                href="home.html"
-                class="active"
-            >
-                Beranda
-            </a>
-
-            <a href="belajar.html">
-                Belajar Alfabet
-            </a>
-
-            <a href="praktik.html">
-                Praktik Gesture
-            </a>
-
+        <nav class="site-nav" aria-label="Navigasi utama">
+            <a href="home.html" aria-current="page">Beranda</a>
+            <a href="belajar.html">Belajar</a>
+            <a href="praktik.html">Praktik</a>
+            <a href="home.html#progres">Progres</a>
+            <a href="home.html#ujian">Ujian</a>
         </nav>
 
-
+        <a href="home.html#progres" class="site-user" id="siteUser"></a>
     </header>
 
+    <main class="dash">
 
+        <!-- MODE TAMU: progres sementara -->
+        <div class="guest-banner" id="guestBanner" role="status" hidden>
+            <span class="guest-banner-icon" aria-hidden="true">!</span>
+            <p>
+                <strong>Kamu sedang mencoba sebagai Tamu.</strong>
+                Progres hanya bertahan selama tab ini terbuka.
+            </p>
+            <button type="button" class="btn btn-dark" id="saveGuestButton">
+                Simpan progres
+            </button>
+        </div>
 
-    <!-- =====================================
-         MAIN
-         ===================================== -->
+        <!-- SAPAAN + LANJUTKAN -->
+        <section class="dash-hero">
+            <div class="dash-hello">
+                <span class="dash-eyebrow" id="dashDate">Dashboard belajar</span>
+                <h1 id="dashGreeting">Halo</h1>
+                <p id="dashSummary">Mulai dari huruf A. Lihat contohnya, pahami, lalu praktikkan.</p>
 
-    <main>
-
-
-        <!-- =================================
-             HERO
-             ================================= -->
-
-        <section class="home-hero">
-
-
-            <div class="hero-text">
-
-
-                <span class="hero-label">
-                    BISINDO UNTUK SEMUA
-                </span>
-
-
-                <h1>
-
-                    Belajar bahasa isyarat,
-                    <br>
-                    satu gerakan setiap kali.
-
-                </h1>
-
-
-                <p>
-
-                    Mulai dari alfabet A–Z, lalu
-                    praktikkan gesture di depan kamera
-                    untuk mendapatkan umpan balik langsung.
-
-                </p>
-
-
-                <div class="hero-buttons">
-
-
-                    <a
-                        href="belajar.html"
-                        class="dark-button"
-                    >
-
-                        <span>▣</span>
-
-                        Belajar Alfabet
-
+                <div class="dash-actions">
+                    <a href="huruf.html?huruf=A" class="btn btn-primary" id="continueLink">
+                        <span id="continueLabel">Mulai huruf A</span>
+                        <span aria-hidden="true">→</span>
                     </a>
-
-
-                    <a
-                        href="praktik.html"
-                        class="light-button"
-                    >
-
-                        <span>⌾</span>
-
-                        Buka Praktik
-
+                    <a href="praktik.html?huruf=A" class="btn btn-ghost" id="practiceLink">
+                        Praktik huruf A
                     </a>
-
-
                 </div>
-
-
             </div>
 
-
-
-            <!-- Visual -->
-
-            <div class="hero-visual">
-
-                <div class="bisindo-visual">
-
-
-                    <div class="letter-card left">
-                        B
-                    </div>
-
-
-                    <div class="letter-card center">
-                        I
-                    </div>
-
-
-                    <div class="letter-card right">
-                        S
-                    </div>
-
-
+            <div class="dash-ring" aria-hidden="true">
+                <svg viewBox="0 0 120 120">
+                    <circle class="ring-track" cx="60" cy="60" r="52"/>
+                    <circle class="ring-learned" id="ringLearned" cx="60" cy="60" r="52"/>
+                    <circle class="ring-practiced" id="ringPracticed" cx="60" cy="60" r="40"/>
+                </svg>
+                <div class="ring-label">
+                    <strong id="ringValue">0</strong>
+                    <span>dari 26 huruf</span>
                 </div>
-
             </div>
-
-
         </section>
 
+        <!-- STATISTIK -->
+        <section class="dash-stats" aria-label="Ringkasan progres">
+            <div class="stat">
+                <span class="stat-dot is-learned" aria-hidden="true"></span>
+                <strong id="statLearned">0</strong>
+                <span>huruf dipelajari</span>
+            </div>
+            <div class="stat">
+                <span class="stat-dot is-practiced" aria-hidden="true"></span>
+                <strong id="statPracticed">0</strong>
+                <span>berhasil dipraktikkan</span>
+            </div>
+            <div class="stat">
+                <span class="stat-dot" aria-hidden="true"></span>
+                <strong id="statLeft">26</strong>
+                <span>belum dipelajari</span>
+            </div>
+        </section>
 
+        <!-- PROGRES PER KELOMPOK -->
+        <section class="dash-section" id="progres" aria-labelledby="progressTitle">
+            <div class="section-head">
+                <div>
+                    <h2 id="progressTitle">Progres per huruf</h2>
+                    <p>Pilih huruf untuk membuka contohnya.</p>
+                </div>
+                <div class="legend" aria-label="Keterangan status">
+                    <span class="status-badge" data-status="new">Belum</span>
+                    <span class="status-badge" data-status="viewed">Dipahami</span>
+                    <span class="status-badge" data-status="practiced">Dipraktikkan</span>
+                </div>
+            </div>
 
-        <!-- =================================
-             PILIH CARA BELAJAR
-             ================================= -->
+            <div class="groups" id="groups"></div>
 
-        <section class="learning-section">
-
-
-            <div class="section-heading">
-
-                <span>
-                    PILIH CARA BELAJAR
-                </span>
-
-                <h2>
-                    Mulai dari yang paling nyaman
-                </h2>
-
+            <div class="storage-note">
                 <p>
-                    Kenali bentuk setiap huruf atau
-                    langsung uji gesture di depan kamera.
+                    <strong id="storageWho">Kamu belajar sebagai Tamu.</strong>
+                    <span id="storageText">Progres tersimpan di browser ini saja. Menghapus data
+                    browser atau berganti perangkat akan memulai dari awal.</span>
                 </p>
-
+                <button type="button" class="btn btn-danger" id="resetButton">
+                    Reset progres
+                </button>
             </div>
-
-
-
-            <div class="learning-cards">
-
-
-                <!-- Belajar -->
-
-                <article class="learning-card light-card">
-
-
-                    <div class="card-content">
-
-                        <span class="card-icon">
-                            ▣
-                        </span>
-
-                        <h3>
-                            Belajar Alfabet BISINDO
-                        </h3>
-
-                        <p>
-                            Jelajahi 26 huruf dengan visual
-                            gesture yang jelas dan petunjuk singkat.
-                        </p>
-
-                        <a href="belajar.html">
-                            → Lihat alfabet A–Z
-                        </a>
-
-                    </div>
-
-
-                    <div class="card-visual">
-
-                        <div class="mini-hand">
-                            ✋
-                        </div>
-
-                        <span>
-                            A
-                        </span>
-
-                    </div>
-
-
-                </article>
-
-
-
-                <!-- Praktik -->
-
-                <article class="learning-card dark-card">
-
-
-                    <div class="card-content">
-
-                        <span class="card-icon">
-                            ◎
-                        </span>
-
-                        <h3>
-                            Praktik Gesture
-                        </h3>
-
-                        <p>
-                            Aktifkan kamera, bentuk sebuah huruf,
-                            dan lihat hasil pengenalan AI secara real-time.
-                        </p>
-
-                        <a href="praktik.html">
-                            → Mulai praktik
-                        </a>
-
-                    </div>
-
-
-                    <div class="card-visual dark-visual">
-
-                        <div class="mini-hand">
-                            ✋
-                        </div>
-
-                        <span>
-                            K
-                        </span>
-
-                    </div>
-
-
-                </article>
-
-
-            </div>
-
-
         </section>
 
-
-
-        <!-- =================================
-             CARA KERJA
-             ================================= -->
-
-        <section class="steps-section" id="cara-kerja">
-
-
-            <div class="section-heading center">
-
-                <span>
-                    CARA KERJA
-                </span>
-
-                <h2>
-                    Tiga langkah sederhana
-                </h2>
-
-                <p>
-                    Tidak perlu akun. Pilih materi,
-                    ikuti panduan, lalu ulangi hingga
-                    gerakan terasa alami.
-                </p>
-
+        <!-- UJIAN -->
+        <section class="dash-section" id="ujian" aria-labelledby="examTitle">
+            <div class="section-head">
+                <div>
+                    <h2 id="examTitle">Ujian</h2>
+                    <p>Huruf acak tanpa foto contoh. Terbuka setelah semua huruf di kelompoknya dipraktikkan.</p>
+                </div>
             </div>
 
-
-
-            <div class="steps">
-
-
-                <!-- Step 01 -->
-
-                <article class="step-card">
-
-                    <div class="step-top">
-
-                        <span>
-                            01
-                        </span>
-
-                        <span class="step-icon">
-                            ⌕
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Pilih huruf
-                    </h3>
-
-
-                    <p>
-                        Buka alfabet dan lihat bentuk
-                        gesture yang ingin dipelajari.
-                    </p>
-
-                </article>
-
-
-
-                <!-- Step 02 -->
-
-                <article class="step-card">
-
-                    <div class="step-top">
-
-                        <span>
-                            02
-                        </span>
-
-                        <span class="step-icon">
-                            ◉
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Ikuti contoh
-                    </h3>
-
-
-                    <p>
-                        Perhatikan posisi tangan dan
-                        arah telapak pada panduan.
-                    </p>
-
-                </article>
-
-
-
-                <!-- Step 03 -->
-
-                <article class="step-card">
-
-                    <div class="step-top">
-
-                        <span>
-                            03
-                        </span>
-
-                        <span class="step-icon">
-                            ⛶
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Praktik dengan AI
-                    </h3>
-
-
-                    <p>
-                        Tunjukkan gesture ke kamera dan
-                        terima hasil pengenalan secara langsung.
-                    </p>
-
-                </article>
-
-
+            <div class="review-note" id="reviewNote" hidden>
+                <strong>Perlu diulang:</strong>
+                <span class="review-letters" id="reviewLetters"></span>
             </div>
 
-
+            <div class="exams" id="exams"></div>
         </section>
 
+        <!-- PINTASAN -->
+        <section class="dash-section" aria-labelledby="shortcutTitle">
+            <h2 id="shortcutTitle" class="visually-hidden">Pintasan</h2>
+
+            <div class="shortcuts">
+                <a href="belajar.html" class="shortcut">
+                    <span class="shortcut-icon" aria-hidden="true">A–Z</span>
+                    <strong>Belajar Alfabet</strong>
+                    <span>Lihat 26 huruf beserta foto dan langkahnya.</span>
+                </a>
+                <a href="praktik.html" class="shortcut is-dark">
+                    <span class="shortcut-icon" aria-hidden="true">◉</span>
+                    <strong>Praktik Gesture</strong>
+                    <span>Peragakan huruf di depan kamera.</span>
+                </a>
+                <a href="tutorial.html" class="shortcut">
+                    <span class="shortcut-icon" aria-hidden="true">?</span>
+                    <strong>Lihat tutorial lagi</strong>
+                    <span>Cara membaca contoh dan posisi yang baik.</span>
+                </a>
+            </div>
+        </section>
 
     </main>
 
-
-
-    <!-- =====================================
-         FOOTER
-         ===================================== -->
-
-    <footer class="home-footer">
-
-
+    <footer class="site-footer">
         <div>
-
-            <strong>
-                IsyaratKu
-            </strong>
-
-            <p>
-                Belajar BISINDO dengan cara yang
-                terbuka, ramah, dan mudah dipraktikkan.
-            </p>
-
+            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
+            <p class="footer-tagline">Bahasa isyarat. Ruang untuk semua.</p>
         </div>
-
-
-        <div class="footer-links">
-
-            <a href="home.html">
-                Beranda
-            </a>
-
-            <a href="belajar.html">
-                Alfabet A-Z
-            </a>
-
-            <a href="praktik.html">
-                Praktik Gesture
-            </a>
-
-        </div>
-
-
-        <span class="copyright">
-            © 2026 IsyaratKu
-        </span>
-
-
+        <nav aria-label="Navigasi footer">
+            <a href="index.html">Halaman awal</a>
+            <a href="belajar.html">Alfabet A–Z</a>
+            <a href="praktik.html">Praktik</a>
+        </nav>
+        <span>© 2026 IsyaratKu</span>
     </footer>
 
+    <!-- SIMPAN PROGRES TAMU -->
+    <dialog class="app-dialog" id="saveDialog" aria-labelledby="saveTitle">
+        <form method="dialog" id="saveForm">
+            <h2 id="saveTitle">Simpan progresmu</h2>
+            <p>
+                Progres tamu akan disimpan di browser ini sehingga bisa
+                dilanjutkan kapan saja. Tidak ada data yang dikirim ke server.
+            </p>
+
+            <label for="saveNameInput">Nama panggilan (opsional)</label>
+            <input id="saveNameInput" maxlength="24"
+                   autocomplete="nickname" placeholder="Misalnya: Vic">
+
+            <p class="save-warning" id="saveWarning" hidden></p>
+
+            <div class="dialog-row">
+                <button type="button" class="btn btn-quiet" id="saveCancel">Batal</button>
+                <button type="submit" class="btn btn-primary" value="save" id="saveConfirm">Simpan</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- KONFIRMASI RESET -->
+    <dialog class="app-dialog" id="resetDialog" aria-labelledby="resetTitle">
+        <form method="dialog">
+            <h2 id="resetTitle">Reset semua progres?</h2>
+            <p id="resetInfo">
+                Status 26 huruf dan nama panggilan di browser ini akan
+                dihapus. Tindakan ini tidak dapat dibatalkan.
+            </p>
+            <div class="dialog-row">
+                <button type="submit" class="btn btn-quiet" value="cancel">Batal</button>
+                <button type="submit" class="btn btn-danger" value="reset">Ya, reset</button>
+            </div>
+        </form>
+    </dialog>
 
 </body>
-
 </html>

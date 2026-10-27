@@ -7,27 +7,31 @@
 
     <title>Belajar Alfabet BISINDO - IsyaratKu</title>
 
-    <link rel="stylesheet" href="./css/theme.css">
-    <link rel="stylesheet" href="./css/belajar.css">
-    <script src="./js/belajar.js" defer></script>
+    <link rel="stylesheet" href="./css/theme.css?v=20261027e">
+    <link rel="stylesheet" href="./css/belajar.css?v=20261027e">
+    <link rel="stylesheet" href="./css/app.css?v=20261027e">
+    <link rel="stylesheet" href="./css/editorial.css?v=20261027e">
+    <script src="./js/progress.js?v=20261027e" defer></script>
+    <script src="./js/site.js?v=20261027e" defer></script>
+    <script src="./js/belajar.js?v=20261027e" defer></script>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="learn-header">
-        <a href="./home.html" class="learn-brand">
-            <span class="brand-icon">Is</span>
-            <span>IsyaratKu</span>
+    <header class="site-header">
+        <a href="index.html" class="site-brand">
+            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
         </a>
 
-        <nav class="learn-nav" aria-label="Navigasi utama">
-            <a href="./home.html">Beranda</a>
-            <a href="./belajar.html" class="active" aria-current="page">
-                Belajar Alfabet
-            </a>
-            <a href="./praktik.html">Praktik Gesture</a>
+        <nav class="site-nav" aria-label="Navigasi utama">
+            <a href="home.html">Beranda</a>
+            <a href="belajar.html" aria-current="page">Belajar</a>
+            <a href="praktik.html">Praktik</a>
+            <a href="home.html#progres">Progres</a>
+            <a href="home.html#ujian">Ujian</a>
         </nav>
+
+        <a href="home.html#progres" class="site-user" id="siteUser"></a>
     </header>
 
     <main class="learn-main">
@@ -48,9 +52,16 @@
                     </p>
                 </div>
 
-                <div class="alphabet-count">
-                    <strong>A–Z</strong>
-                    <span>26 gesture untuk dipelajari</span>
+                <div class="learn-progress" aria-live="polite">
+                    <div class="learn-progress-top">
+                        <strong id="learnCount">0/26</strong>
+                        <span>huruf dipelajari</span>
+                    </div>
+                    <div class="progress-bar" aria-hidden="true">
+                        <span id="learnBarLearned"></span>
+                        <span id="learnBarPracticed"></span>
+                    </div>
+                    <small id="learnPracticed">0 berhasil dipraktikkan</small>
                 </div>
             </div>
         </section>
@@ -92,9 +103,14 @@
         </section>
 
         <!-- HINT -->
-        <p class="instruction">
-            ☆ Pilih kartu huruf untuk membuka halaman detailnya.
-        </p>
+        <div class="instruction">
+            <span>Pilih kartu huruf untuk membuka contoh dan langkahnya.</span>
+            <span class="legend">
+                <span class="status-badge" data-status="new">Belum</span>
+                <span class="status-badge" data-status="viewed">Dipahami</span>
+                <span class="status-badge" data-status="practiced">Dipraktikkan</span>
+            </span>
+        </div>
 
         <!-- ALPHABET CARDS -->
         <section class="alphabet-section" aria-label="Alfabet BISINDO">
@@ -112,22 +128,17 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="learn-footer">
-        <div class="footer-about">
-            <strong>IsyaratKu</strong>
-            <p>
-                Belajar BISINDO dengan cara yang terbuka,
-                ramah, dan mudah dipraktikkan.
-            </p>
+    <footer class="site-footer">
+        <div>
+            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
+            <p class="footer-tagline">Bahasa isyarat. Ruang untuk semua.</p>
         </div>
-
-        <nav class="footer-links" aria-label="Navigasi footer">
-            <a href="./home.html">Beranda</a>
-            <a href="./belajar.html">Alfabet A–Z</a>
-            <a href="./praktik.html">Praktik Gesture</a>
+        <nav aria-label="Navigasi footer">
+            <a href="home.html">Beranda</a>
+            <a href="belajar.html">Alfabet A–Z</a>
+            <a href="praktik.html">Praktik</a>
         </nav>
-
-        <span class="copyright">© 2026 IsyaratKu</span>
+        <span>© 2026 IsyaratKu</span>
     </footer>
 
 </body>

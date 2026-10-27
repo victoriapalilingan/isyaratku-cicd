@@ -591,3 +591,77 @@ button {
         scroll-behavior: auto !important;
     }
 }
+
+/* =========================================
+   STATUS BELAJAR (revisi UI)
+   ========================================= */
+
+.learn-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 240px;
+    padding: 16px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background: white;
+    box-shadow: var(--shadow-card);
+}
+
+.learn-progress-top {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.learn-progress-top strong {
+    color: var(--color-primary-strong);
+    font-size: 24px;
+    line-height: 1;
+}
+
+.learn-progress-top span,
+.learn-progress small {
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+.instruction {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.instruction .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.card-header .status-badge {
+    padding: 2px 8px;
+    font-size: 10px;
+}
+
+/* Huruf yang belum dipelajari diberi garis aksen di atas */
+.alphabet-card[data-status="new"] {
+    border-top: 3px solid var(--color-accent);
+}
+
+.alphabet-card[data-status="practiced"] {
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, var(--color-mint), white 45%);
+}
+
+@media (max-width: 700px) {
+    .intro-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .learn-progress {
+        min-width: 0;
+    }
+}

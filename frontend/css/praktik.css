@@ -1168,3 +1168,115 @@ a:focus-visible,
         transition-duration: 0.01ms !important;
     }
 }
+
+/* =========================================
+   REVISI UI: HURUF TARGET + BERHASIL
+   Tanpa 3D dan tanpa animasi berat agar
+   kamera dan inferensi tidak terganggu.
+   ========================================= */
+
+.target-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    box-shadow: var(--shadow-card);
+}
+
+.target-card img {
+    flex: none;
+    width: 76px;
+    height: 76px;
+    border-radius: 14px;
+    background: var(--color-mint);
+    object-fit: cover;
+}
+
+.target-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.target-copy span {
+    color: var(--color-muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.target-copy strong {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.05;
+}
+
+.target-copy a {
+    color: var(--color-primary-strong);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.target-card .status-badge {
+    margin-left: auto;
+    align-self: flex-start;
+}
+
+.practice-success {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 6px 12px;
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid #A6E0C0;
+    border-radius: 16px;
+    background: var(--color-success-bg);
+    animation: success-in 0.3s ease-out;
+}
+
+.practice-success strong {
+    display: block;
+    color: var(--color-success);
+    font-size: 15px;
+}
+
+.practice-success div span {
+    color: var(--color-navy);
+    font-size: 13px;
+}
+
+.success-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-success);
+    color: white;
+    font-weight: 800;
+}
+
+.practice-success .btn {
+    grid-column: 1 / -1;
+    min-height: 42px;
+    font-size: 14px;
+}
+
+.target-card[hidden],
+.practice-success[hidden] {
+    display: none;
+}
+
+@keyframes success-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+.site-footer p {
+    margin-top: 4px;
+}

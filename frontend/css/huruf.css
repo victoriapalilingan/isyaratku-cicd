@@ -567,3 +567,105 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* =========================================
+   REVISI UI: FOTO LEBIH BESAR + STATUS
+   ========================================= */
+
+.gesture-image-box {
+    width: min(360px, 92%);
+    aspect-ratio: 4 / 5;
+}
+
+.gesture-image-box img {
+    padding: 0;
+    object-fit: cover;
+}
+
+.mastery {
+    display: grid;
+    gap: 10px;
+    max-width: 620px;
+    margin-top: 25px;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: white;
+}
+
+.mastery-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--color-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.understand-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1.5px dashed var(--color-border-strong);
+    border-radius: 12px;
+    background: var(--color-bg);
+    color: var(--color-navy);
+    font: 700 15px var(--font-sans);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.understand-button:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    background: var(--color-mint);
+}
+
+.understand-box {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--color-border-strong);
+    border-radius: 6px;
+    background: white;
+    color: white;
+    font-size: 13px;
+}
+
+.understand-button[aria-pressed="true"] {
+    border-style: solid;
+    border-color: var(--color-success);
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    cursor: default;
+}
+
+.understand-button[aria-pressed="true"] .understand-box {
+    border-color: var(--color-success);
+    background: var(--color-success);
+}
+
+.understand-button[aria-pressed="true"] .understand-box::after {
+    content: "✓";
+}
+
+.mastery-hint {
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+/* Setelah dipahami, tombol praktik menjadi ajakan utama */
+.practice-button.is-ready {
+    background: var(--color-navy);
+    box-shadow: 0 0 0 4px rgba(244, 201, 93, 0.6);
+    animation: ready-pulse 1.8s ease-in-out 2;
+}
+
+@keyframes ready-pulse {
+    50% { box-shadow: 0 0 0 9px rgba(244, 201, 93, 0.15); }
+}

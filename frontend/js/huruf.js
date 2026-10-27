@@ -327,6 +327,74 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     /* =====================================
+       STATUS BELAJAR
+       "Saya sudah memahami" -> status Dipahami.
+       Status Dipraktikkan hanya dari halaman praktik.
+       ===================================== */
+
+    const progress = window.IsyaratProgress;
+
+    const STATUS_TEXT = {
+        new: "Belum dipelajari",
+        viewed: "Sudah dipahami",
+        practiced: "Berhasil dipraktikkan"
+    };
+
+    const letterStatus = document.getElementById("letterStatus");
+    const understandButton = document.getElementById("understandButton");
+    const understandLabel = document.getElementById("understandLabel");
+    const masteryHint = document.getElementById("masteryHint");
+    const mastery = document.getElementById("mastery");
+
+    function renderStatus() {
+        const status = progress.statusOf(currentLetter);
+        const understood = status !== "new";
+
+        letterStatus.dataset.status = status;
+        letterStatus.textContent = STATUS_TEXT[status];
+
+        understandButton.setAttribute("aria-pressed", String(understood));
+        understandButton.disabled = understood;
+        understandLabel.textContent = understood
+            ? `Kamu sudah memahami huruf ${currentLetter}`
+            : "Saya sudah memahami huruf ini";
+
+        mastery.dataset.status = status;
+        practiceButton.classList.toggle("is-ready", status === "viewed");
+
+        if (status === "new") {
+            masteryHint.textContent =
+                "Pahami bentuk tangannya dulu, lalu praktikkan di depan kamera.";
+        } else if (status === "viewed") {
+            masteryHint.textContent =
+                `Bagus! Sekarang coba peragakan huruf ${currentLetter} di depan kamera.`;
+        } else {
+            masteryHint.textContent =
+                `Huruf ${currentLetter} sudah berhasil kamu praktikkan. Lanjut ke huruf ${nextLetter}?`;
+        }
+
+        // Salah saat ujian: diulang lewat halaman ini lalu praktik.
+        if (progress.needsReview(currentLetter)) {
+            masteryHint.textContent =
+                `Huruf ${currentLetter} salah saat ujian. Perhatikan lagi contohnya, ` +
+                "lalu latih kembali di mode ujian.";
+        }
+    }
+
+    if (progress) {
+        progress.setLastLetter(currentLetter);
+
+        understandButton.addEventListener("click", () => {
+            progress.markViewed(currentLetter);
+        });
+
+        document.addEventListener("isyarat:progress", renderStatus);
+        renderStatus();
+    } else {
+        mastery.hidden = true;
+    }
+
+    /* =====================================
        FINISH
        ===================================== */
 

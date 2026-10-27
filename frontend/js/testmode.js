@@ -25,6 +25,10 @@
     // Jendela pencatatan setiap percobaan.
     const TRIAL_MS = 5000;
 
+    // Mode otomatis: lama hasil ditampilkan sebelum
+    // percobaan berikutnya dimulai.
+    const RESULT_MS = 1800;
+
     const REPETITIONS = 3;
 
     const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -75,6 +79,11 @@
     let current = null;
     let phaseTimer = null;
     let tickTimer = null;
+
+    // Mode otomatis: percobaan berjalan berurutan tanpa
+    // menekan tombol untuk setiap huruf.
+    const auto = { on: false, paused: false };
+    let resultTimer = null;
 
     function migrateTrial(trial) {
         const migrated = {};
@@ -183,9 +192,22 @@
             </div>
         </div>
 
+        <div class="test-auto">
+            <button type="button" class="primary-button" id="testAuto">
+                ▶ Mulai Otomatis
+            </button>
+            <label class="test-check">
+                <input type="checkbox" id="testSpeak">
+                Bacakan huruf target
+            </label>
+            <span class="test-keys">
+                <kbd>Spasi</kbd> mulai/jeda · <kbd>R</kbd> ulangi · <kbd>Esc</kbd> berhenti
+            </span>
+        </div>
+
         <div class="test-actions">
-            <button type="button" class="primary-button" id="testStart">
-                Mulai Percobaan
+            <button type="button" class="secondary-button" id="testStart">
+                Satu Percobaan
             </button>
             <button type="button" class="secondary-button" id="testCancel" hidden>
                 Batalkan
@@ -221,11 +243,15 @@
         </div>
 
         <p class="test-footnote">
+            Mode otomatis menjalankan percobaan berurutan A–Z (percobaan ke-1,
+            lalu ke-2 dan ke-3) sampai skenario selesai, dengan jeda
+            ${RESULT_MS / 1000} detik untuk menampilkan hasil.
             Persiapan ${PREP_MS / 1000} detik (tidak dicatat), lalu frame dicatat
             selama ${TRIAL_MS / 1000} detik. Hasil percobaan = huruf stabil
             (≥${SYSTEM.stableMinVotes} dari ${SYSTEM.stableWindow} prediksi
-            terakhir dengan keyakinan ≥${Math.round(SYSTEM.minConfidence * 100)}%)
-            yang tampil pada akhir jendela.
+            terakhir dengan keyakinan ≥${Math.round(SYSTEM.minConfidence * 100)}%;
+            prediksi di bawah ambang diabaikan, bukan dihitung sebagai frame
+            tanpa hasil) yang tampil pada akhir jendela.
             Latency end-to-end diukur sejak frame diambil dari webcam
             sampai hasil tampil di antarmuka. FPS klasifikasi menghitung
             frame yang melewati deteksi dan klasifikasi (status success);
@@ -244,7 +270,29 @@
 
     document.body.classList.add("test-mode");
 
+    // Hitung mundur besar di atas video kamera, terbaca dari jarak
+    // saat pengguna memperagakan gesture.
+    const overlay = document.createElement("div");
+    overlay.className = "test-overlay";
+    overlay.hidden = true;
+    overlay.setAttribute("aria-live", "polite");
+    overlay.innerHTML = `
+        <span class="ov-label" id="ovLabel"></span>
+        <span class="ov-letter" id="ovLetter"></span>
+        <span class="ov-count" id="ovCount"></span>
+        <span class="ov-hint" id="ovHint"></span>
+    `;
+    document.getElementById("camera-container")?.appendChild(overlay);
+
     const byId = id => document.getElementById(id);
+
+    const ovLabel = byId("ovLabel");
+    const ovLetter = byId("ovLetter");
+    const ovCount = byId("ovCount");
+    const ovHint = byId("ovHint");
+
+    const autoButton = byId("testAuto");
+    const speakCheck = byId("testSpeak");
 
     const scenarioSelect = byId("testScenario");
     const userInput = byId("testUser");
@@ -505,20 +553,44 @@
     // ALUR PERCOBAAN
     // =====================================
 
+    // view: prep | recording | ok | bad | paused | hidden
+    function showOverlay(view, { label = "", letter = "", count = "", hint = "" } = {}) {
+        if (view === "hidden") {
+            overlay.hidden = true;
+            return;
+        }
+
+        overlay.hidden = false;
+        overlay.dataset.view = view;
+        ovLabel.textContent = label;
+        ovLetter.textContent = letter;
+        ovCount.textContent = count;
+        ovHint.textContent = hint;
+    }
+
     function setPhase(next, text, detail = "") {
         phase = next;
         stage.dataset.phase = next;
         phaseText.textContent = text;
         phaseDetail.textContent = detail;
 
-        const busy = next !== "idle";
+        renderControls();
+    }
 
-        startButton.hidden = busy;
-        cancelButton.hidden = !busy;
-        undoButton.disabled = busy;
+    function renderControls() {
+        const busy = phase !== "idle";
 
+        startButton.hidden = busy || auto.on;
+        cancelButton.hidden = !busy || auto.on;
+        undoButton.disabled = busy || (auto.on && !auto.paused);
+
+        autoButton.textContent = !auto.on
+            ? "▶ Mulai Otomatis"
+            : auto.paused ? "▶ Lanjutkan" : "❚❚ Jeda";
+
+        // Saat dijeda, form boleh diubah (mis. mengisi kode pengguna).
         [scenarioSelect, userInput, letterSelect, repSelect].forEach(element => {
-            element.disabled = busy;
+            element.disabled = busy || (auto.on && !auto.paused);
         });
     }
 
@@ -529,29 +601,64 @@
         tickTimer = null;
     }
 
-    function countdown(totalMs, label) {
+    function countdown(totalMs, label, view) {
         const endAt = performance.now() + totalMs;
+        const letter = current?.letter || "";
 
         const tick = () => {
             const left = Math.max(0, endAt - performance.now());
             phaseDetail.textContent = `${label} ${(left / 1000).toFixed(1)} s`;
+
+            showOverlay(view, {
+                label: view === "prep" ? "Siapkan gesture" : "● Merekam",
+                letter,
+                count: String(Math.max(1, Math.ceil(left / 1000))),
+                hint: view === "prep"
+                    ? "Tahan sampai hitungan merekam selesai"
+                    : "Tahan gesture"
+            });
         };
 
         tick();
         tickTimer = setInterval(tick, 100);
     }
 
-    function startTrial() {
-        if (phase !== "idle") return;
-
-        if (!window.IsyaratCamera?.isRunning()) {
-            setNotice("Aktifkan kamera terlebih dahulu.");
+    function speakTarget(letter) {
+        if (!speakCheck.checked || !("speechSynthesis" in window)) {
             return;
         }
 
+        try {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(`Huruf ${letter}`);
+            utterance.lang = "id-ID";
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        } catch (error) {
+            // Suara gagal tidak boleh menghentikan pengujian.
+        }
+    }
+
+    // replace: ganti percobaan yang sudah ada tanpa konfirmasi
+    // (dipakai tombol R). Mengembalikan false jika gagal dimulai.
+    function startTrial({ replace = false } = {}) {
+        if (phase !== "idle") return false;
+
+        clearTimeout(resultTimer);
+        resultTimer = null;
+
+        const fail = message => {
+            setNotice(message);
+            if (auto.on) pauseAuto(message);
+            return false;
+        };
+
+        if (!window.IsyaratCamera?.isRunning()) {
+            return fail("Aktifkan kamera terlebih dahulu.");
+        }
+
         if (!window.IsyaratCamera.isBackendAvailable()) {
-            setNotice("Sistem belum terhubung. Tunggu sampai status menampilkan “Sistem siap”.");
-            return;
+            return fail("Sistem belum terhubung. Tunggu sampai status menampilkan “Sistem siap”.");
         }
 
         const scenario = selectedScenario();
@@ -559,18 +666,18 @@
         const rep = Number(repSelect.value);
 
         if (scenario.id === 8 && !userInput.value.trim()) {
-            setNotice("Skenario variasi pengguna: isi kode pengguna terlebih dahulu.");
+            userInput.disabled = false;
             userInput.focus();
-            return;
+            return fail("Skenario variasi pengguna: isi kode pengguna terlebih dahulu.");
         }
 
-        if (findTrial(scenario.id, letter, rep)) {
+        if (!replace && findTrial(scenario.id, letter, rep)) {
             const replace = window.confirm(
                 `Huruf ${letter} percobaan ke-${rep} pada skenario ini ` +
                 "sudah ada. Ganti dengan percobaan baru?"
             );
 
-            if (!replace) return;
+            if (!replace) return false;
         }
 
         setNotice("");
@@ -584,10 +691,14 @@
             startedAt: null
         };
 
+        renderTarget();
+        renderGrid();
         setPhase("prep", `Siapkan gesture huruf ${letter}`);
-        countdown(PREP_MS, "Pencatatan dimulai dalam");
+        countdown(PREP_MS, "Pencatatan dimulai dalam", "prep");
+        speakTarget(letter);
 
         phaseTimer = setTimeout(beginRecording, PREP_MS);
+        return true;
     }
 
     function beginRecording() {
@@ -603,7 +714,7 @@
         current.startedClock = new Date();
 
         setPhase("recording", `Merekam huruf ${current.letter}`);
-        countdown(TRIAL_MS, "Sisa waktu");
+        countdown(TRIAL_MS, "Sisa waktu", "recording");
 
         phaseTimer = setTimeout(finishTrial, TRIAL_MS);
     }
@@ -612,6 +723,101 @@
         clearTimers();
         current = null;
         setPhase("idle", "Dibatalkan", "Percobaan tidak disimpan.");
+        if (!auto.on) showOverlay("hidden");
+    }
+
+    // =====================================
+    // MODE OTOMATIS
+    // =====================================
+
+    function startAuto() {
+        if (auto.on || phase !== "idle") return;
+
+        if (!nextSlot(selectedScenario().id)) {
+            setNotice("Skenario ini sudah lengkap. Pilih skenario lain.");
+            return;
+        }
+
+        goToNextSlot();
+        auto.on = true;
+        auto.paused = false;
+        renderControls();
+
+        if (!startTrial()) return;
+        setNotice("Mode otomatis berjalan. Spasi = jeda, Esc = berhenti.");
+    }
+
+    // Percobaan yang sedang berjalan dibatalkan (tidak disimpan)
+    // lalu diulang dari awal saat dilanjutkan.
+    function pauseAuto(reason = "Dijeda.") {
+        if (!auto.on || auto.paused) return;
+
+        clearTimeout(resultTimer);
+        resultTimer = null;
+
+        if (phase !== "idle") cancelTrial();
+
+        auto.paused = true;
+        renderControls();
+        setPhase("idle", "Dijeda", reason);
+        showOverlay("paused", {
+            label: "Dijeda",
+            letter: letterSelect.value,
+            hint: "Tekan Spasi untuk melanjutkan"
+        });
+    }
+
+    function resumeAuto() {
+        if (!auto.on || !auto.paused) return;
+
+        auto.paused = false;
+        renderControls();
+
+        if (startTrial()) {
+            setNotice("Mode otomatis dilanjutkan.");
+        }
+    }
+
+    function stopAuto(message = "Mode otomatis dihentikan.") {
+        clearTimeout(resultTimer);
+        resultTimer = null;
+
+        const wasRunning = phase !== "idle";
+
+        auto.on = false;
+        auto.paused = false;
+
+        if (wasRunning) cancelTrial();
+
+        renderControls();
+        showOverlay("hidden");
+        setNotice(message);
+    }
+
+    // Ulangi percobaan terakhir (mis. gesture terlambat dibentuk).
+    function repeatLast() {
+        if (phase !== "idle" || !trials.length) return;
+
+        const last = trials[trials.length - 1];
+
+        clearTimeout(resultTimer);
+        resultTimer = null;
+
+        scenarioSelect.value = last.skenario_id;
+        letterSelect.value = last.huruf_target;
+        repSelect.value = last.percobaan_ke;
+        renderScenarioInfo();
+
+        if (auto.on) auto.paused = false;
+        renderControls();
+
+        startTrial({ replace: true });
+    }
+
+    function toggleAuto() {
+        if (!auto.on) startAuto();
+        else if (auto.paused) resumeAuto();
+        else pauseAuto("Dijeda oleh penguji.");
     }
 
     function onFrame(frame) {
@@ -646,10 +852,16 @@
                 "Tidak sah",
                 "Tidak ada frame yang tercatat. Percobaan tidak disimpan."
             );
-            setNotice(
+            const message =
                 "Tidak ada respons backend selama jendela pencatatan. " +
-                "Periksa koneksi backend lalu ulangi percobaan."
-            );
+                "Periksa koneksi backend lalu ulangi percobaan.";
+            setNotice(message);
+
+            if (auto.on) {
+                pauseAuto(message);
+            } else {
+                showOverlay("hidden");
+            }
             return;
         }
 
@@ -681,12 +893,40 @@
         renderGrid();
         renderSummary();
 
-        if (!nextSlot(trial.skenario_id)) {
-            setNotice(
+        showOverlay(trial.benar ? "ok" : "bad", {
+            label: trial.benar ? "✓ Benar" : "✗ Salah",
+            letter: trial.huruf_target,
+            hint: trial.benar
+                ? ""
+                : `Terbaca: ${trial.huruf_hasil || "tidak stabil"}`
+        });
+
+        const done = !nextSlot(trial.skenario_id);
+
+        if (done) {
+            const message =
                 `Skenario ${trial.skenario_id} selesai (78 percobaan). ` +
-                "Ekspor CSV, lalu pilih skenario berikutnya."
-            );
+                "Ekspor CSV, lalu pilih skenario berikutnya.";
+
+            if (auto.on) {
+                resultTimer = setTimeout(() => stopAuto(message), RESULT_MS);
+            } else {
+                setNotice(message);
+                resultTimer = setTimeout(() => showOverlay("hidden"), RESULT_MS);
+            }
+            return;
         }
+
+        // Mode otomatis: lanjut ke huruf berikutnya setelah jeda hasil.
+        resultTimer = setTimeout(() => {
+            resultTimer = null;
+
+            if (auto.on && !auto.paused) {
+                startTrial();
+            } else if (!auto.on) {
+                showOverlay("hidden");
+            }
+        }, RESULT_MS);
     }
 
     function summarizeTrial(run) {
@@ -893,8 +1133,45 @@
         renderGrid();
     });
 
-    startButton.addEventListener("click", startTrial);
+    startButton.addEventListener("click", () => startTrial());
     cancelButton.addEventListener("click", cancelTrial);
+    autoButton.addEventListener("click", toggleAuto);
+
+    // Kontrol keyboard agar tangan penguji tetap bebas.
+    document.addEventListener("keydown", event => {
+        const tag = event.target?.tagName;
+
+        if (
+            event.ctrlKey || event.altKey || event.metaKey ||
+            ["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag) ||
+            document.querySelector("dialog[open]")
+        ) {
+            return;
+        }
+
+        if (event.code === "Space") {
+            event.preventDefault();
+            toggleAuto();
+        } else if (event.key === "Escape") {
+            if (auto.on) stopAuto();
+            else if (phase !== "idle") cancelTrial();
+        } else if (event.key === "r" || event.key === "R") {
+            repeatLast();
+        }
+    });
+
+    // Tab ditinggal atau diminimalkan: kamera/animasi tidak
+    // berjalan normal, jadi mode otomatis dijeda.
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) return;
+
+        if (auto.on) {
+            pauseAuto("Dijeda karena tab browser ditinggalkan.");
+        } else if (phase !== "idle") {
+            cancelTrial();
+            setNotice("Percobaan dibatalkan karena tab browser ditinggalkan.");
+        }
+    });
 
     undoButton.addEventListener("click", () => {
         if (!trials.length) return;
@@ -951,9 +1228,15 @@
         setNotice("Semua data percobaan dihapus.");
     });
 
-    // Kamera berhenti saat merekam: percobaan dibatalkan.
+    // Kamera berhenti saat merekam: percobaan dibatalkan,
+    // mode otomatis dijeda. Listener ini berjalan setelah
+    // webcam.js, jadi isRunning() sudah bernilai baru.
     document.getElementById("start-camera")?.addEventListener("click", () => {
-        if (phase !== "idle") {
+        if (window.IsyaratCamera?.isRunning()) return;
+
+        if (auto.on) {
+            pauseAuto("Kamera dihentikan.");
+        } else if (phase !== "idle") {
             cancelTrial();
             setNotice("Kamera dihentikan, percobaan dibatalkan.");
         }
