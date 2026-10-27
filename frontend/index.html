@@ -1,213 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-          content="IsyaratKu: belajar alfabet BISINDO A–Z lalu langsung praktik di depan kamera dengan pengenalan gesture real-time.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="IsyaratKu: belajar alfabet BISINDO A–Z lalu langsung praktik di depan kamera dengan pengenalan gesture real-time."
+    />
 
     <title>IsyaratKu – Belajar Alfabet BISINDO</title>
 
-    <link rel="stylesheet" href="./css/theme.css?v=20261027e">
-    <link rel="stylesheet" href="./css/landing.css?v=20261027e">
-    <link rel="stylesheet" href="./css/app.css?v=20261027e">
-    <link rel="stylesheet" href="./css/editorial.css?v=20261027e">
+    <link rel="stylesheet" href="./css/theme.css?v=20261027e" />
+    <link rel="stylesheet" href="./css/landing.css?v=20261027e" />
+    <link rel="stylesheet" href="./css/app.css?v=20261027e" />
+    <link rel="stylesheet" href="./css/editorial.css?v=20261027e" />
 
     <script src="./js/progress.js?v=20261027e" defer></script>
     <script src="./js/site.js?v=20261027e" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      defer
+    ></script>
     <script src="./js/hero3d.js?v=20261027e" defer></script>
     <script src="./js/landing.js?v=20261027e" defer></script>
-</head>
+  </head>
 
-<body class="landing">
-
+  <body class="landing">
     <header class="site-header is-transparent">
-        <a href="index.html" class="site-brand">
-            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
-        </a>
+      <a href="index.html" class="site-brand">
+        <span class="wordmark"
+          >isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span
+        >
+      </a>
 
-        <nav class="site-nav" aria-label="Navigasi utama">
-            <a href="#cara-kerja">Cara kerja</a>
-            <a href="tutorial.html">Tutorial</a>
-            <a href="belajar.html">Alfabet A–Z</a>
-        </nav>
+      <nav class="site-nav" aria-label="Navigasi utama">
+        <a href="#cara-kerja">Cara kerja</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="belajar.html">Alfabet A–Z</a>
+      </nav>
 
-        <a href="home.html#progres" class="site-user" id="siteUser"></a>
+      <a href="home.html#progres" class="site-user" id="siteUser"></a>
     </header>
 
     <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="hero-eyebrow">
+            <span aria-hidden="true">✦</span>
+            Belajar BISINDO, langsung praktik
+          </span>
 
-        <!-- HERO -->
-        <section class="hero">
+          <h1>
+            Testing CI/CD DevOps.
+            <span>Gerakkan tangan.</span>
+            Belajar dengan percaya diri.
+          </h1>
 
-            <div class="hero-copy">
-                <span class="hero-eyebrow">
-                    <span aria-hidden="true">✦</span>
-                    Belajar BISINDO, langsung praktik
-                </span>
+          <p class="hero-lead">
+            Lihat contoh gesture setiap huruf, pahami bentuk tangannya, lalu
+            praktikkan di depan kamera. IsyaratKu mengenali gesture kamu secara
+            langsung.
+          </p>
 
-                <h1>
-                    Kenali 26 huruf.
-                    <span>Gerakkan tangan.</span>
-                    Belajar dengan percaya diri.
-                </h1>
+          <div class="hero-actions">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg"
+              id="startButton"
+            >
+              Mulai Belajar
+              <span aria-hidden="true">→</span>
+            </button>
 
-                <p class="hero-lead">
-                    Lihat contoh gesture setiap huruf, pahami bentuk
-                    tangannya, lalu praktikkan di depan kamera.
-                    IsyaratKu mengenali gesture kamu secara langsung.
-                </p>
+            <button type="button" class="btn btn-ghost btn-lg" id="guestButton">
+              Lanjut sebagai Tamu
+            </button>
+          </div>
 
-                <div class="hero-actions">
-                    <button type="button" class="btn btn-primary btn-lg" id="startButton">
-                        Mulai Belajar
-                        <span aria-hidden="true">→</span>
-                    </button>
+          <a href="home.html" class="resume-card" id="resumeCard" hidden>
+            <span class="resume-ring" id="resumeRing" aria-hidden="true"></span>
+            <span class="resume-text">
+              <small id="resumeHello">Selamat datang kembali</small>
+              <strong id="resumeLabel">Lanjutkan belajar</strong>
+            </span>
+            <span class="resume-arrow" aria-hidden="true">→</span>
+          </a>
 
-                    <button type="button" class="btn btn-ghost btn-lg" id="guestButton">
-                        Lanjut sebagai Tamu
-                    </button>
-                </div>
+          <ul class="mode-hints">
+            <li>
+              <strong>Mulai Belajar</strong>
+              progres disimpan di browser ini, bisa dilanjutkan kapan saja.
+            </li>
+            <li>
+              <strong>Tamu</strong>
+              coba dulu tanpa nama; progres hilang saat tab ditutup.
+            </li>
+          </ul>
 
-                <a href="home.html" class="resume-card" id="resumeCard" hidden>
-                    <span class="resume-ring" id="resumeRing" aria-hidden="true"></span>
-                    <span class="resume-text">
-                        <small id="resumeHello">Selamat datang kembali</small>
-                        <strong id="resumeLabel">Lanjutkan belajar</strong>
-                    </span>
-                    <span class="resume-arrow" aria-hidden="true">→</span>
-                </a>
+          <p class="hero-note">
+            <span aria-hidden="true">✓</span>
+            Tanpa akun. Tidak ada data yang dikirim ke server.
+          </p>
+        </div>
 
-                <ul class="mode-hints">
-                    <li>
-                        <strong>Mulai Belajar</strong>
-                        progres disimpan di browser ini, bisa dilanjutkan kapan saja.
-                    </li>
-                    <li>
-                        <strong>Tamu</strong>
-                        coba dulu tanpa nama; progres hilang saat tab ditutup.
-                    </li>
-                </ul>
-
-                <p class="hero-note">
-                    <span aria-hidden="true">✓</span>
-                    Tanpa akun. Tidak ada data yang dikirim ke server.
-                </p>
+        <!-- VISUAL 3D -->
+        <div class="hero-visual">
+          <div class="hero-stage" id="hero3d">
+            <!-- Fallback tanpa WebGL -->
+            <div class="hero-fallback" aria-hidden="true">
+              <span>I</span><span>S</span><span>Y</span>
+              <span class="is-on">A</span><span>R</span><span>A</span>
+              <span>T</span><span>K</span><span>U</span>
             </div>
+          </div>
 
-            <!-- VISUAL 3D -->
-            <div class="hero-visual">
-                <div class="hero-stage" id="hero3d">
+          <div class="hero-readout" id="heroReadout" aria-hidden="true">
+            <span class="readout-dot"></span>
+            <span class="readout-copy">
+              <small>Gesture dikenali</small>
+              <strong>
+                Huruf <b id="heroReadoutLetter">A</b> ·
+                <span id="heroReadoutValue">94.2%</span>
+              </strong>
+            </span>
+          </div>
+        </div>
+      </section>
 
-                    <!-- Fallback tanpa WebGL -->
-                    <div class="hero-fallback" aria-hidden="true">
-                        <span>I</span><span>S</span><span>Y</span>
-                        <span class="is-on">A</span><span>R</span><span>A</span>
-                        <span>T</span><span>K</span><span>U</span>
-                    </div>
-                </div>
+      <!-- FAKTA SINGKAT -->
+      <section class="facts" aria-label="Fitur utama">
+        <div class="fact">
+          <strong>26</strong>
+          <span>huruf BISINDO dengan foto contoh</span>
+        </div>
+        <div class="fact">
+          <strong>Real-time</strong>
+          <span>pengenalan gesture melalui kamera</span>
+        </div>
+        <div class="fact">
+          <strong>0 akun</strong>
+          <span>langsung pakai, progres di perangkatmu</span>
+        </div>
+      </section>
 
-                <div class="hero-readout" id="heroReadout" aria-hidden="true">
-                    <span class="readout-dot"></span>
-                    <span class="readout-copy">
-                        <small>Gesture dikenali</small>
-                        <strong>
-                            Huruf <b id="heroReadoutLetter">A</b>
-                            · <span id="heroReadoutValue">94.2%</span>
-                        </strong>
-                    </span>
-                </div>
+      <!-- CARA KERJA -->
+      <section class="how" id="cara-kerja">
+        <div class="how-heading">
+          <span class="hero-eyebrow">Cara kerja</span>
+          <h2>Pahami dulu, baru praktik</h2>
+          <p>
+            Setiap huruf melewati tiga tahap. Progresmu terlihat di dashboard
+            sehingga kamu tahu huruf mana yang perlu diulang.
+          </p>
+        </div>
+
+        <ol class="how-steps">
+          <li class="how-step">
+            <span class="how-num">01</span>
+            <img src="assets/bisindo/C.jpg" alt="" loading="lazy" />
+            <h3>Lihat contoh</h3>
+            <p>
+              Buka huruf dan perhatikan foto gesture serta langkah-langkahnya.
+            </p>
+          </li>
+          <li class="how-step">
+            <span class="how-num">02</span>
+            <div class="how-mark" aria-hidden="true">✓</div>
+            <h3>Tandai paham</h3>
+            <p>Tekan “Saya sudah memahami” setelah bentuk tangannya jelas.</p>
+          </li>
+          <li class="how-step">
+            <span class="how-num">03</span>
+            <div class="how-cam" aria-hidden="true">
+              <span>L</span>
+              <i></i>
             </div>
-        </section>
-
-        <!-- FAKTA SINGKAT -->
-        <section class="facts" aria-label="Fitur utama">
-            <div class="fact">
-                <strong>26</strong>
-                <span>huruf BISINDO dengan foto contoh</span>
-            </div>
-            <div class="fact">
-                <strong>Real-time</strong>
-                <span>pengenalan gesture melalui kamera</span>
-            </div>
-            <div class="fact">
-                <strong>0 akun</strong>
-                <span>langsung pakai, progres di perangkatmu</span>
-            </div>
-        </section>
-
-        <!-- CARA KERJA -->
-        <section class="how" id="cara-kerja">
-            <div class="how-heading">
-                <span class="hero-eyebrow">Cara kerja</span>
-                <h2>Pahami dulu, baru praktik</h2>
-                <p>
-                    Setiap huruf melewati tiga tahap. Progresmu
-                    terlihat di dashboard sehingga kamu tahu huruf
-                    mana yang perlu diulang.
-                </p>
-            </div>
-
-            <ol class="how-steps">
-                <li class="how-step">
-                    <span class="how-num">01</span>
-                    <img src="assets/bisindo/C.jpg" alt="" loading="lazy">
-                    <h3>Lihat contoh</h3>
-                    <p>Buka huruf dan perhatikan foto gesture serta langkah-langkahnya.</p>
-                </li>
-                <li class="how-step">
-                    <span class="how-num">02</span>
-                    <div class="how-mark" aria-hidden="true">✓</div>
-                    <h3>Tandai paham</h3>
-                    <p>Tekan “Saya sudah memahami” setelah bentuk tangannya jelas.</p>
-                </li>
-                <li class="how-step">
-                    <span class="how-num">03</span>
-                    <div class="how-cam" aria-hidden="true">
-                        <span>L</span>
-                        <i></i>
-                    </div>
-                    <h3>Praktik di kamera</h3>
-                    <p>Peragakan huruf sampai sistem mengenalinya, lalu lanjut ke huruf berikutnya.</p>
-                </li>
-            </ol>
-        </section>
-
+            <h3>Praktik di kamera</h3>
+            <p>
+              Peragakan huruf sampai sistem mengenalinya, lalu lanjut ke huruf
+              berikutnya.
+            </p>
+          </li>
+        </ol>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div>
-            <span class="wordmark">isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span>
-            <p class="footer-tagline">Bahasa isyarat. Ruang untuk semua.</p>
-        </div>
-        <nav aria-label="Navigasi footer">
-            <a href="tutorial.html">Tutorial</a>
-            <a href="belajar.html">Alfabet A–Z</a>
-            <a href="praktik.html">Praktik</a>
-        </nav>
-        <span>© 2026 IsyaratKu</span>
+      <div>
+        <span class="wordmark"
+          >isyaratku<span class="wordmark-dot" aria-hidden="true">.</span></span
+        >
+        <p class="footer-tagline">Bahasa isyarat. Ruang untuk semua.</p>
+      </div>
+      <nav aria-label="Navigasi footer">
+        <a href="tutorial.html">Tutorial</a>
+        <a href="belajar.html">Alfabet A–Z</a>
+        <a href="praktik.html">Praktik</a>
+      </nav>
+      <span>© 2026 IsyaratKu</span>
     </footer>
 
     <!-- DIALOG NAMA -->
     <dialog class="app-dialog" id="nameDialog" aria-labelledby="nameTitle">
-        <form method="dialog" id="nameForm">
-            <h2 id="nameTitle">Siapa nama panggilanmu?</h2>
-            <p>
-                Opsional, hanya untuk menyapamu. Progres dan nama disimpan di
-                browser ini saja dan tidak dikirim ke mana pun.
-            </p>
+      <form method="dialog" id="nameForm">
+        <h2 id="nameTitle">Siapa nama panggilanmu?</h2>
+        <p>
+          Opsional, hanya untuk menyapamu. Progres dan nama disimpan di browser
+          ini saja dan tidak dikirim ke mana pun.
+        </p>
 
-            <label for="nicknameInput">Nama panggilan</label>
-            <input id="nicknameInput" name="nickname" maxlength="24"
-                   autocomplete="nickname" placeholder="Misalnya: Vic">
+        <label for="nicknameInput">Nama panggilan</label>
+        <input
+          id="nicknameInput"
+          name="nickname"
+          maxlength="24"
+          autocomplete="nickname"
+          placeholder="Misalnya: Vic"
+        />
 
-            <div class="dialog-row">
-                <button type="button" class="btn btn-quiet" id="nameCancel">Batal</button>
-                <button type="submit" class="btn btn-primary" value="ok">Mulai</button>
-            </div>
-        </form>
+        <div class="dialog-row">
+          <button type="button" class="btn btn-quiet" id="nameCancel">
+            Batal
+          </button>
+          <button type="submit" class="btn btn-primary" value="ok">
+            Mulai
+          </button>
+        </div>
+      </form>
     </dialog>
-
-</body>
+  </body>
 </html>
