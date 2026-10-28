@@ -218,6 +218,7 @@
         </div>
 
         <p class="test-notice" id="testNotice" role="status"></p>
+        <p class="test-notice" id="testServer" role="status"></p>
 
         <div class="test-last" id="testLast" hidden></div>
 
@@ -236,6 +237,9 @@
             </button>
             <button type="button" class="secondary-button" id="exportFrames">
                 Ekspor CSV Frame (sesi ini)
+            </button>
+            <button type="button" class="secondary-button" id="uploadTrials">
+                Unggah Semua ke Server
             </button>
             <button type="button" class="danger-button" id="testReset">
                 Hapus Semua Data
@@ -326,6 +330,69 @@
 
     function setNotice(text) {
         notice.textContent = text;
+    }
+
+    // =====================================
+    // CADANGAN KE SERVER (MySQL)
+    // Data tetap disimpan di localStorage seperti biasa;
+    // server hanya cadangan. Gagal ke server tidak
+    // mengganggu pengujian.
+    // =====================================
+
+    const SERVER_API = "admin/api/percobaan.php";
+    const serverStatus = byId("testServer");
+
+    async function callServer(payload) {
+        let response;
+
+        try {
+            response = await fetch(SERVER_API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
+                body: JSON.stringify(payload)
+            });
+        } catch (error) {
+            throw new Error("server tidak dapat dihubungi");
+        }
+
+        if (response.status === 401) {
+            throw new Error("belum login admin; buka /admin/ dan login sekali");
+        }
+
+        const body = await response.json().catch(() => null);
+
+        if (!response.ok || body?.status !== "success") {
+            throw new Error(body?.message || `HTTP ${response.status}`);
+        }
+
+        return body;
+    }
+
+    async function syncTrials(list, label) {
+        serverStatus.textContent = `Server: mengirim ${label}…`;
+
+        try {
+            const result = await callServer({ action: "save", trials: list });
+            serverStatus.textContent =
+                `Server: ${label} tersimpan ✓ ` +
+                `(${result.baru} baru, ${result.diganti} diganti, ${result.sama} sudah ada)`;
+        } catch (error) {
+            serverStatus.textContent =
+                `Server: gagal menyimpan ${label} (${error.message}). ` +
+                "Data tetap aman di browser.";
+        }
+    }
+
+    async function deleteFromServer(trial) {
+        try {
+            await callServer({ action: "delete", trial });
+            serverStatus.textContent = "Server: percobaan terakhir juga dihapus ✓";
+        } catch (error) {
+            serverStatus.textContent =
+                `Server: gagal menghapus (${error.message}). ` +
+                "Hapus manual di halaman admin.";
+        }
     }
 
     function selectedScenario() {
@@ -875,6 +942,7 @@
 
         trials.push(trial);
         saveTrials();
+        syncTrials([trial], `${trial.huruf_target} ke-${trial.percobaan_ke}`);
 
         current.frames.forEach((frame, index) => {
             sessionFrames.push(frameRow(trial, frame, index + 1));
@@ -1185,6 +1253,7 @@
 
         trials.pop();
         saveTrials();
+        deleteFromServer(last);
 
         sessionFrames = sessionFrames.filter(row => !(
             row.skenario_id === last.skenario_id &&
@@ -1211,6 +1280,14 @@
 
     byId("exportFrames").addEventListener("click", () => {
         download(sessionFrames, "frame");
+    });
+
+    byId("uploadTrials").addEventListener("click", () => {
+        if (!trials.length) {
+            serverStatus.textContent = "Server: belum ada percobaan untuk diunggah.";
+            return;
+        }
+        syncTrials(trials, `${trials.length} percobaan`);
     });
 
     byId("testReset").addEventListener("click", () => {
