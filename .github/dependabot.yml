@@ -1,0 +1,8 @@
+# Cek pembaruan & kerentanan dependency Python setiap minggu (B7, H3).
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

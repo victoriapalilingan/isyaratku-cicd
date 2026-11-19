@@ -15,3 +15,6 @@ dataset/*.zip
 
 # Hasil training dan eksperimen
 outputs/
+
+# Hasil & bukti audit lokal (berisi IP/screenshot server) - jangan di-commit
+audit/

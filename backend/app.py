@@ -5,14 +5,15 @@ import numpy as np
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+from cors_config import ALLOWED_ORIGINS
 from routes import prediction
 from routes.prediction import prediction_bp, get_detector
 from services import inference
 
 app = Flask(__name__)
 
-# Mengizinkan frontend berkomunikasi dengan backend
-CORS(app)
+# Hanya origin IsyaratKu dan pengembangan lokal yang boleh memanggil API.
+CORS(app, origins=ALLOWED_ORIGINS)
 
 # Mendaftarkan route prediction
 app.register_blueprint(prediction_bp)
