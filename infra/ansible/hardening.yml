@@ -15,9 +15,17 @@
     ssh_port: 9765
 
   tasks:
+    # aide-common menarik postfix; "No configuration" = postfix tidak berjalan & port 25 tidak dibuka.
+    - name: Postfix tanpa konfigurasi
+      ansible.builtin.debconf:
+        name: postfix
+        question: postfix/main_mailer_type
+        value: No configuration
+        vtype: select
+
     - name: Pasang paket keamanan
       ansible.builtin.apt:
-        name: [fail2ban, auditd, aide, unattended-upgrades, ufw]
+        name: [fail2ban, auditd, aide, aide-common, unattended-upgrades, ufw]
         state: present
         update_cache: true
 
@@ -73,7 +81,15 @@
           -w /etc/isyaratku/ -p wa -k app_secret
           -w /etc/passwd -p wa -k identity
           -w /etc/sudoers -p wa -k sudoers
-          -w /var/lib/jenkins/config.xml -p wa -k jenkins_conf
+          -w /root/.jenkins/config.xml -p wa -k jenkins_conf
+      notify: Load audit rules
+
+    # Audit kernel bisa tertinggal mati (enabled 0) setelah restart layanan; -e 1 memaksa aktif.
+    - name: Pastikan audit kernel aktif
+      ansible.builtin.copy:
+        dest: /etc/audit/rules.d/99-enable.rules
+        mode: "0640"
+        content: "-e 1\n"
       notify: Load audit rules
 
     - name: Security header Apache (zz- agar dimuat setelah security.conf bawaan)
