@@ -12,6 +12,9 @@ from services import inference
 
 app = Flask(__name__)
 
+# Frame webcam ~100 KB; tolak upload > 5 MB dengan 413 (OWASP C4).
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
+
 # Hanya origin IsyaratKu dan pengembangan lokal yang boleh memanggil API.
 CORS(app, origins=ALLOWED_ORIGINS)
 
