@@ -6,15 +6,15 @@
    Update : tandai valid/tidak valid dan beri catatan
    Delete : hapus percobaan yang gagal agar bisa diulang
 
-   Halaman ini dikunci Basic Auth Apache
-   (/etc/apache2/conf-available/isyaratku-admin.conf).
+   Halaman ini wajib login (login.php, sesi PHP).
+   Logout otomatis setelah 15 menit tidak aktif.
    ========================================= */
 
 declare(strict_types=1);
 
 require __DIR__ . '/lib.php';
 
-session_start();
+require_login();
 
 if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));
@@ -259,7 +259,13 @@ unset($_SESSION['flash']);
 
     <header class="admin-header">
         <a href="../index.html" class="admin-brand">isyaratku<span>.</span></a>
-        <span class="admin-badge">Admin</span>
+        <div class="admin-account">
+            <span class="admin-badge"><?= h($_SESSION['admin_user']) ?></span>
+            <form method="post" action="logout.php">
+                <input type="hidden" name="csrf" value="<?= h($csrf) ?>">
+                <button type="submit" class="btn btn-small btn-ghost">Logout</button>
+            </form>
+        </div>
     </header>
 
     <main class="admin-main">

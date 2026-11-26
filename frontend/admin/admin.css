@@ -511,3 +511,28 @@ tr.is-invalid .col-letter {
         width: 70px;
     }
 }
+
+
+/* =========================================
+   LOGIN & LOGOUT
+   ========================================= */
+
+.admin-account {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-account form {
+    margin: 0;
+}
+
+.login-main {
+    max-width: 420px;
+}
+
+.login-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+}
