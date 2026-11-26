@@ -7,7 +7,11 @@
 (() => {
     "use strict";
 
-    const API_URL = "http://127.0.0.1:5000/api/predict";
+    // Lokal: langsung ke Flask. Server: lewat proxy Apache /api/ (Flask hanya listen di 127.0.0.1).
+    const IS_LOCAL = ["localhost", "127.0.0.1", ""].includes(location.hostname);
+    const API_URL = IS_LOCAL
+        ? "http://127.0.0.1:5000/api/predict"
+        : "/api/predict";
 
     const SEND_MAX_WIDTH = 640;
     const JPEG_QUALITY = 0.7;

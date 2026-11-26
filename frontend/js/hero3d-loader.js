@@ -15,10 +15,18 @@
     const EVENTS = ["pointermove", "pointerdown", "touchstart", "keydown", "scroll", "wheel"];
     let started = false;
 
-    function loadScript(src) {
+    // SRI: browser menolak three.js bila isi file di CDN berubah.
+    const THREE_SRI = "sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==";
+
+    function loadScript(src, integrity) {
         return new Promise((resolve, reject) => {
             const script = document.createElement("script");
             script.src = src;
+            if (integrity) {
+                script.integrity = integrity;
+                script.crossOrigin = "anonymous";
+                script.referrerPolicy = "no-referrer";
+            }
             script.onload = resolve;
             script.onerror = reject;
             document.head.appendChild(script);
@@ -30,7 +38,7 @@
         started = true;
         EVENTS.forEach(name => window.removeEventListener(name, start));
 
-        loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js")
+        loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", THREE_SRI)
             .then(() => loadScript("./js/hero3d.js?v=20261126"))
             .catch(() => {
                 /* Gagal dimuat: kartu statis tetap tampil */

@@ -5,14 +5,18 @@ import numpy as np
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+from cors_config import ALLOWED_ORIGINS
 from routes import prediction
 from routes.prediction import prediction_bp, get_detector
 from services import inference
 
 app = Flask(__name__)
 
-# Mengizinkan frontend berkomunikasi dengan backend
-CORS(app)
+# Frame webcam ~100 KB; tolak upload > 5 MB dengan 413 (OWASP C4).
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
+
+# Hanya origin IsyaratKu dan pengembangan lokal yang boleh memanggil API.
+CORS(app, origins=ALLOWED_ORIGINS)
 
 # Mendaftarkan route prediction
 app.register_blueprint(prediction_bp)

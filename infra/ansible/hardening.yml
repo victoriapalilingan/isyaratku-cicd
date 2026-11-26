@@ -1,0 +1,166 @@
+# =========================================
+# ISYARATKU - HARDENING VPS (Infrastructure as Code)
+# Sama dengan Fase 1-2 di audit/RENCANA_PERBAIKAN.md, dalam bentuk yang bisa diulang & di-scan (checkov).
+#
+# Jalankan dari mesin Linux/WSL yang punya Ansible:
+#   ansible-playbook -i inventory.ini hardening.yml --check --diff   # simulasi dulu
+#   ansible-playbook -i inventory.ini hardening.yml
+# PENTING: pastikan login SSH pakai key sudah berhasil SEBELUM playbook ini mematikan login password.
+# =========================================
+- name: Hardening VPS IsyaratKu
+  hosts: isyaratku
+  become: true
+
+  vars:
+    ssh_port: 9765
+
+  tasks:
+    # aide-common menarik postfix; "No configuration" = postfix tidak berjalan & port 25 tidak dibuka.
+    - name: Postfix tanpa konfigurasi
+      ansible.builtin.debconf:
+        name: postfix
+        question: postfix/main_mailer_type
+        value: No configuration
+        vtype: select
+
+    - name: Pasang paket keamanan
+      ansible.builtin.apt:
+        name: [fail2ban, auditd, aide, aide-common, unattended-upgrades, ufw]
+        state: present
+        update_cache: true
+
+    - name: SSH hanya login dengan key (00- agar menang atas 50-cloud-init.conf)
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/00-hardening.conf
+        mode: "0644"
+        content: |
+          PasswordAuthentication no
+          KbdInteractiveAuthentication no
+          PermitRootLogin no
+          MaxAuthTries 3
+      notify: Reload ssh
+
+    - name: Jail fail2ban untuk SSH dan Basic Auth Apache
+      ansible.builtin.copy:
+        dest: /etc/fail2ban/jail.local
+        mode: "0644"
+        content: |
+          [DEFAULT]
+          bantime  = 1h
+          findtime = 10m
+          maxretry = 5
+          action   = %(action_)s
+                     telegram
+
+          [sshd]
+          enabled = true
+          port    = {{ ssh_port }}
+
+          [apache-auth]
+          enabled = true
+      notify: Restart fail2ban
+
+    - name: Aksi fail2ban kirim alert Telegram
+      ansible.builtin.copy:
+        dest: /etc/fail2ban/action.d/telegram.conf
+        mode: "0644"
+        content: |
+          [Definition]
+          actionban   = /usr/local/bin/notify-telegram "fail2ban <name>: IP <ip> diblokir"
+          actionunban =
+      notify: Restart fail2ban
+
+    - name: Aturan auditd untuk file konfigurasi penting
+      ansible.builtin.copy:
+        dest: /etc/audit/rules.d/isyaratku.rules
+        mode: "0640"
+        content: |
+          -w /etc/apache2/ -p wa -k apache_conf
+          -w /etc/ssh/sshd_config -p wa -k sshd_conf
+          -w /etc/ssh/sshd_config.d/ -p wa -k sshd_conf
+          -w /etc/isyaratku/ -p wa -k app_secret
+          -w /etc/passwd -p wa -k identity
+          -w /etc/sudoers -p wa -k sudoers
+          -w /root/.jenkins/config.xml -p wa -k jenkins_conf
+      notify: Load audit rules
+
+    # Audit kernel bisa tertinggal mati (enabled 0) setelah restart layanan; -e 1 memaksa aktif.
+    - name: Pastikan audit kernel aktif
+      ansible.builtin.copy:
+        dest: /etc/audit/rules.d/99-enable.rules
+        mode: "0640"
+        content: "-e 1\n"
+      notify: Load audit rules
+
+    - name: Security header Apache (zz- agar dimuat setelah security.conf bawaan)
+      ansible.builtin.copy:
+        dest: /etc/apache2/conf-available/zz-hardening.conf
+        mode: "0644"
+        content: |
+          ServerTokens Prod
+          ServerSignature Off
+          TraceEnable Off
+          Header always set X-Content-Type-Options "nosniff"
+          Header always set X-Frame-Options "SAMEORIGIN"
+          Header always set Referrer-Policy "strict-origin-when-cross-origin"
+          Header always set Strict-Transport-Security "max-age=31536000"
+          Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+      notify: Reload apache
+
+    - name: Aktifkan mod_headers
+      ansible.builtin.command: a2enmod headers
+      args:
+        creates: /etc/apache2/mods-enabled/headers.load
+      notify: Reload apache
+
+    - name: Aktifkan konfigurasi hardening Apache
+      ansible.builtin.command: a2enconf zz-hardening
+      args:
+        creates: /etc/apache2/conf-enabled/zz-hardening.conf
+      notify: Reload apache
+
+    - name: Update keamanan otomatis
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        mode: "0644"
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+
+    - name: Firewall - default tolak koneksi masuk
+      community.general.ufw:
+        state: enabled
+        direction: incoming
+        policy: deny
+
+    - name: Firewall - izinkan HTTP, HTTPS, dan SSH (port {{ ssh_port }})
+      community.general.ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop: ["80", "443", "{{ ssh_port }}"]
+
+    - name: Fail2ban dan auditd aktif saat boot
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: [fail2ban, auditd]
+
+  handlers:
+    - name: Reload ssh
+      ansible.builtin.shell: sshd -t && systemctl reload ssh
+      changed_when: true
+
+    - name: Restart fail2ban
+      ansible.builtin.service:
+        name: fail2ban
+        state: restarted
+
+    - name: Load audit rules
+      ansible.builtin.command: augenrules --load
+      changed_when: true
+
+    - name: Reload apache
+      ansible.builtin.shell: apache2ctl configtest && systemctl reload apache2
+      changed_when: true
