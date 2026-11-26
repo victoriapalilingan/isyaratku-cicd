@@ -13,7 +13,7 @@
    (waktu berbeda) menggantikan data lama; unggah ulang
    data yang sama tidak menghapus tanda valid/catatan admin.
 
-   Terkunci Basic Auth bersama folder admin/. Body wajib
+   Wajib login admin (sesi PHP, lihat login.php). Body wajib
    application/json sehingga form dari situs lain tidak
    bisa mengirim data (perlu preflight CORS).
    ========================================= */
@@ -21,6 +21,8 @@
 declare(strict_types=1);
 
 require __DIR__ . '/../lib.php';
+
+require_login(true);
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
